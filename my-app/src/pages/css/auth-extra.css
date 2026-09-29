@@ -1,0 +1,207 @@
+/* src/pages/css/auth-extra.css */
+* { box-sizing: border-box; }
+
+.extra-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(circle at 15% 5%, #FFF5F7 0%, transparent 40%),
+    radial-gradient(circle at 90% 95%, #FFF0F4 0%, transparent 45%),
+    #FFFFFF;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.extra-auth-card {
+  background: #FFFFFF;
+  border: 1px solid #FFE0E8;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  box-shadow: 0 20px 40px -12px rgba(255, 63, 108, 0.12);
+}
+
+.extra-auth-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFF5F7, #FFE9EF);
+  border: 2px solid #FFD9E1;
+  color: #FF3F6C;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.extra-auth-icon.success {
+  background: #E8F5EE;
+  border-color: #A8DFC1;
+  color: #03A685;
+}
+
+.extra-auth-card h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #282C3F;
+  margin: 0 0 0.5rem;
+}
+
+.extra-auth-desc {
+  color: #7E808C;
+  font-size: 0.9rem;
+  margin: 0 0 1.8rem;
+  line-height: 1.5;
+}
+
+.extra-auth-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.extra-auth-alert.success {
+  background: #E8F5EE;
+  border: 1px solid #A8DFC1;
+  color: #03A685;
+}
+
+.extra-auth-alert.error {
+  background: #FFF0F2;
+  border: 1px solid #FFC0CB;
+  color: #D63384;
+}
+
+.extra-auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+  text-align: left;
+}
+
+.extra-auth-field label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #282C3F;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.extra-auth-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1.5px solid #EBEBEE;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.extra-auth-input:focus-within {
+  border-color: #FF3F6C;
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.10);
+}
+
+.extra-auth-input > i {
+  position: absolute;
+  left: 1rem;
+  color: #94969F;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.extra-auth-input:focus-within > i { color: #FF3F6C; }
+
+.extra-auth-input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  color: #282C3F;
+  font-size: 0.92rem;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.extra-auth-input input::placeholder { color: #B0B1B9; }
+
+.extra-auth-eye {
+  position: absolute;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  color: #94969F;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.extra-auth-eye:hover { color: #FF3F6C; }
+
+.extra-auth-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.5rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #FF3F6C, #E6355F);
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px -6px rgba(255, 63, 108, 0.5);
+}
+
+.extra-auth-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(255, 63, 108, 0.6);
+}
+
+.extra-auth-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.extra-auth-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.extra-auth-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.4rem;
+  color: #7E808C;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.extra-auth-back:hover { color: #FF3F6C; }

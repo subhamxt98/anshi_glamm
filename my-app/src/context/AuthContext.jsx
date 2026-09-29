@@ -5,12 +5,17 @@ const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [token, setToken] = useState(null)
   const [loading, setLoading] = useState(true)
 
   // App load pe token check
   useEffect(() => {
-    const stored = localStorage.getItem('ishani_user')
-    if (stored) setUser(JSON.parse(stored))
+    const storedUser = localStorage.getItem('ishani_user')
+    const storedToken = localStorage.getItem('ishani_token')
+
+    if (storedUser) setUser(JSON.parse(storedUser))
+    if (storedToken) setToken(storedToken)
+
     setLoading(false)
   }, [])
 
@@ -25,6 +30,7 @@ export const AuthProvider = ({ children }) => {
     if (!res.ok) throw new Error(data.message || 'Registration failed')
 
     setUser(data)
+    setToken(data.token)
     localStorage.setItem('ishani_user', JSON.stringify(data))
     localStorage.setItem('ishani_token', data.token)
     return data
@@ -41,14 +47,28 @@ export const AuthProvider = ({ children }) => {
     if (!res.ok) throw new Error(data.message || 'Login failed')
 
     setUser(data)
+    setToken(data.token)
     localStorage.setItem('ishani_user', JSON.stringify(data))
     localStorage.setItem('ishani_token', data.token)
     return data
   }
 
+  // ===== UPDATE USER (profile update ke baad) =====
+  const updateUser = (newData) => {
+    const updated = { ...user, ...newData }
+    setUser(updated)
+    localStorage.setItem('ishani_user', JSON.stringify(updated))
+
+    if (newData.token) {
+      setToken(newData.token)
+      localStorage.setItem('ishani_token', newData.token)
+    }
+  }
+
   // ===== LOGOUT =====
   const logout = () => {
     setUser(null)
+    setToken(null)
     localStorage.removeItem('ishani_user')
     localStorage.removeItem('ishani_token')
   }
@@ -57,10 +77,12 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        token,
         loading,
         login,
         register,
         logout,
+        updateUser,
         isAuthenticated: !!user,
       }}
     >

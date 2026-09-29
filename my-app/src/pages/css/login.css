@@ -1,17 +1,14 @@
 /* ============================================================
-   ANSHIÉ's GLAM — Auth Page CSS
-   Clean modern luxury · Black + Gold gradient
-   Banner + Logo (same file) · Only Google social
+   ANSHIÉ's GLAM — Login / Auth Page CSS
+   White + Pink (Myntra style)
    ============================================================ */
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  background: #0a0808;
+  background: #FFFFFF;
 }
 
 /* ---------- Page wrapper ---------- */
@@ -23,11 +20,11 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: radial-gradient(circle at 20% 15%, #17110c 0%, #0a0808 55%, #050404 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 100%);
   overflow: hidden;
 }
 
-/* ---------- Soft gradient glows (no stars) ---------- */
+/* ---------- Soft pink glows ---------- */
 .glam-bg {
   position: absolute;
   inset: 0;
@@ -38,34 +35,25 @@ body {
 .glam-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(140px);
+  filter: blur(120px);
 }
 
 .glow-1 {
-  width: 520px;
-  height: 520px;
-  top: -180px;
-  left: -160px;
-  background: #c9a257;
-  opacity: 0.18;
+  width: 480px; height: 480px;
+  top: -160px; left: -140px;
+  background: #FF3F6C; opacity: 0.14;
 }
 
 .glow-2 {
-  width: 420px;
-  height: 420px;
-  bottom: -140px;
-  right: -120px;
-  background: #b8944c;
-  opacity: 0.12;
+  width: 400px; height: 400px;
+  bottom: -120px; right: -100px;
+  background: #FF7A99; opacity: 0.12;
 }
 
 .glow-3 {
-  width: 320px;
-  height: 320px;
-  top: 45%;
-  right: 10%;
-  background: #d4af6a;
-  opacity: 0.07;
+  width: 300px; height: 300px;
+  top: 45%; right: 12%;
+  background: #FFB6C8; opacity: 0.10;
 }
 
 /* ---------- Card ---------- */
@@ -76,13 +64,13 @@ body {
   flex-wrap: wrap;
   width: 100%;
   max-width: 1080px;
-  background: #120f0d;
-  border: 1px solid rgba(212, 175, 106, 0.22);
-  border-radius: 2rem;
+  background: #FFFFFF;
+  border: 1px solid #FFD9E1;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow:
-    0 40px 80px -30px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(212, 175, 106, 0.06);
+    0 30px 60px -20px rgba(255, 63, 108, 0.18),
+    0 0 0 1px rgba(255, 63, 108, 0.04);
 }
 
 /* ============================================================
@@ -92,7 +80,7 @@ body {
   flex: 1 1 45%;
   min-width: 320px;
   position: relative;
-  color: #f5ede1;
+  color: #FFFFFF;
 }
 
 .glam-side-banner {
@@ -111,7 +99,7 @@ body {
 .glam-side-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 8, 8, 0.35) 0%, rgba(10, 8, 8, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(40, 44, 63, 0.35) 0%, rgba(40, 44, 63, 0.92) 100%);
   pointer-events: none;
 }
 
@@ -122,7 +110,7 @@ body {
   z-index: 2;
 }
 
-/* ---------- Logo (uses banner.jpeg) ---------- */
+/* ---------- Logo ---------- */
 .glam-logo {
   display: inline-flex;
   align-items: center;
@@ -134,14 +122,14 @@ body {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 1.5px solid #d4af6a;
+  border: 2px solid #FFFFFF;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(212, 175, 106, 0.06);
+  background: rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(212, 175, 106, 0.08);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
 }
 
 .glam-logo-mark img {
@@ -159,16 +147,16 @@ body {
 
 .glam-logo-brand {
   font-size: 1.3rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 2px;
-  color: #d4af6a;
+  color: #FFFFFF;
   text-transform: uppercase;
 }
 
 .glam-logo-sub {
   font-size: 0.65rem;
   letter-spacing: 4px;
-  color: #a38b5c;
+  color: #FFD9E1;
   text-transform: uppercase;
 }
 
@@ -184,10 +172,11 @@ body {
 .glam-badge {
   display: inline-block;
   width: fit-content;
-  background: rgba(212, 175, 106, 0.12);
-  border: 1px solid rgba(212, 175, 106, 0.3);
-  color: #d4af6a;
-  font-size: 0.68rem;
+  background: rgba(255, 63, 108, 0.9);
+  border: none;
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 700;
   letter-spacing: 2px;
   padding: 0.35rem 0.9rem;
   border-radius: 40px;
@@ -198,17 +187,17 @@ body {
 .glam-side-title {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   margin: 0 0 0.9rem;
-  color: #f5ede1;
+  color: #FFFFFF;
 }
 
 .glam-side-desc {
-  color: #c3b69e;
+  color: #FFE4EB;
   font-size: 0.9rem;
   line-height: 1.7;
-  font-weight: 300;
+  font-weight: 400;
   margin: 0 0 1.8rem;
   max-width: 95%;
 }
@@ -228,8 +217,8 @@ body {
   align-items: center;
   gap: 0.7rem;
   font-size: 0.85rem;
-  font-weight: 300;
-  color: #ddd2c0;
+  font-weight: 500;
+  color: #FFFFFF;
 }
 
 .glam-features li i {
@@ -239,17 +228,15 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(212, 175, 106, 0.1);
-  border: 1px solid rgba(212, 175, 106, 0.25);
-  color: #d4af6a;
+  background: rgba(255, 63, 108, 0.9);
+  border: none;
+  color: #FFFFFF;
   font-size: 0.8rem;
   flex-shrink: 0;
 }
 
 /* ---------- Side footer ---------- */
-.glam-side-foot {
-  padding-top: 1.5rem;
-}
+.glam-side-foot { padding-top: 1.5rem; }
 
 .glam-socials {
   display: flex;
@@ -264,23 +251,22 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 1px solid rgba(212, 175, 106, 0.25);
-  color: #a38b5c;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
   font-size: 0.9rem;
   transition: all 0.25s ease;
   cursor: pointer;
 }
 
 .glam-socials i:hover {
-  border-color: #d4af6a;
-  color: #d4af6a;
-  background: rgba(212, 175, 106, 0.08);
+  border-color: #FFFFFF;
+  background: rgba(255, 63, 108, 0.9);
 }
 
 .glam-side-foot p {
   margin: 0;
   font-size: 0.7rem;
-  color: #6b5e4c;
+  color: #FFD9E1;
 }
 
 /* ============================================================
@@ -290,35 +276,33 @@ body {
   flex: 1 1 55%;
   min-width: 340px;
   padding: 2.6rem 2.4rem;
-  background: #120f0d;
+  background: #FFFFFF;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.glam-form-head {
-  margin-bottom: 1.4rem;
-}
+.glam-form-head { margin-bottom: 1.4rem; }
 
 .glam-form-head h3 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.75rem;
-  font-weight: 500;
-  color: #f5ede1;
+  font-weight: 700;
+  color: #282C3F;
   margin: 0 0 0.35rem;
 }
 
 .glam-form-head p {
   margin: 0;
-  color: #9a8d7a;
+  color: #535766;
   font-size: 0.85rem;
 }
 
 .glam-switch {
   background: none;
   border: none;
-  color: #d4af6a;
-  font-weight: 500;
+  color: #FF3F6C;
+  font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
   padding: 0;
@@ -326,7 +310,7 @@ body {
 }
 
 .glam-switch:hover {
-  color: #f0d49b;
+  color: #E6355F;
   text-decoration: underline;
 }
 
@@ -334,8 +318,8 @@ body {
 .glam-tabs {
   position: relative;
   display: flex;
-  background: #0a0808;
-  border: 1px solid rgba(212, 175, 106, 0.18);
+  background: #FFF5F7;
+  border: 1px solid #FFD9E1;
   border-radius: 12px;
   padding: 4px;
   margin: 1.4rem 0 1.5rem;
@@ -349,45 +333,42 @@ body {
   border: none;
   padding: 0.6rem 0.5rem;
   font-size: 0.85rem;
-  font-weight: 500;
-  color: #8a7d6a;
+  font-weight: 700;
+  color: #94969F;
   border-radius: 8px;
   cursor: pointer;
   transition: color 0.25s ease;
   font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.glam-tab.active {
-  color: #131010;
-}
+.glam-tab.active { color: #FFFFFF; }
 
 .glam-tab-pill {
   position: absolute;
   top: 4px;
   bottom: 4px;
   width: calc(50% - 4px);
-  background: linear-gradient(135deg, #d4af6a, #b8944c);
+  background: linear-gradient(135deg, #FF3F6C, #E6355F);
   border-radius: 8px;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  box-shadow: 0 4px 12px rgba(255, 63, 108, 0.3);
 }
 
-.glam-tab-pill.left {
-  transform: translateX(0);
-}
-
-.glam-tab-pill.right {
-  transform: translateX(100%);
-}
+.glam-tab-pill.left  { transform: translateX(0); }
+.glam-tab-pill.right { transform: translateX(100%); }
 
 /* ---------- Alert ---------- */
 .glam-alert {
-  background: rgba(220, 53, 69, 0.1);
-  border: 1px solid rgba(220, 53, 69, 0.35);
-  color: #f5a6a6;
+  background: #FFF0F2;
+  border: 1px solid #FFC0CB;
+  color: #D63384;
   padding: 0.75rem 1rem;
   border-radius: 10px;
   font-size: 0.82rem;
+  font-weight: 600;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -407,10 +388,10 @@ body {
 }
 
 .glam-field label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #b9aa92;
-  letter-spacing: 0.6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #282C3F;
+  letter-spacing: 0.7px;
   text-transform: uppercase;
 }
 
@@ -419,36 +400,36 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  background: #0a0808;
-  border: 1px solid rgba(212, 175, 106, 0.2);
+  background: #FFFFFF;
+  border: 1.5px solid #E9E9EB;
   border-radius: 10px;
   transition: all 0.25s ease;
 }
 
 .glam-input:focus-within {
-  border-color: #d4af6a;
-  box-shadow: 0 0 0 3px rgba(212, 175, 106, 0.1);
+  border-color: #FF3F6C;
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.10);
 }
 
 .glam-input.error {
-  border-color: rgba(220, 53, 69, 0.6);
+  border-color: #FF3F6C;
 }
 
 .glam-input.error:focus-within {
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.12);
 }
 
 .glam-input > i {
   position: absolute;
   left: 1rem;
-  color: #7a6e5c;
+  color: #94969F;
   font-size: 0.95rem;
   pointer-events: none;
   transition: color 0.2s;
 }
 
 .glam-input:focus-within > i {
-  color: #d4af6a;
+  color: #FF3F6C;
 }
 
 .glam-input input {
@@ -456,14 +437,26 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  padding: 0.8rem 1rem 0.8rem 2.8rem;
-  color: #f0e8dc;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  color: #282C3F;
   font-size: 0.92rem;
   font-family: inherit;
+  font-weight: 500;
+  caret-color: #FF3F6C;
 }
 
 .glam-input input::placeholder {
-  color: #5c5245;
+  color: #94969F;
+  font-weight: 400;
+}
+
+/* Chrome Autofill fix */
+.glam-input input:-webkit-autofill,
+.glam-input input:-webkit-autofill:hover,
+.glam-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px #FFFFFF inset !important;
+  -webkit-text-fill-color: #282C3F !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* Eye toggle */
@@ -472,7 +465,7 @@ body {
   right: 0.9rem;
   background: none;
   border: none;
-  color: #7a6e5c;
+  color: #94969F;
   font-size: 1rem;
   cursor: pointer;
   padding: 0.2rem;
@@ -481,14 +474,13 @@ body {
   transition: color 0.2s;
 }
 
-.glam-eye:hover {
-  color: #d4af6a;
-}
+.glam-eye:hover { color: #FF3F6C; }
 
 /* Error text */
 .glam-err {
   font-size: 0.75rem;
-  color: #f5a6a6;
+  color: #D63384;
+  font-weight: 600;
   padding-left: 0.2rem;
 }
 
@@ -504,15 +496,16 @@ body {
 .glam-forgot {
   background: none;
   border: none;
-  color: #d4af6a;
+  color: #FF3F6C;
   font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
   padding: 0;
   transition: color 0.2s;
 }
 
 .glam-forgot:hover {
-  color: #f0d49b;
+  color: #E6355F;
   text-decoration: underline;
 }
 
@@ -523,9 +516,10 @@ body {
   gap: 0.55rem;
   cursor: pointer;
   font-size: 0.82rem;
-  color: #b9aa92;
+  color: #535766;
   user-select: none;
   margin: 0;
+  font-weight: 500;
 }
 
 .glam-check input {
@@ -539,16 +533,16 @@ body {
   position: relative;
   width: 18px;
   height: 18px;
-  border: 1.5px solid rgba(212, 175, 106, 0.45);
+  border: 1.5px solid #C7C8CD;
   border-radius: 4px;
-  background: #0a0808;
+  background: #FFFFFF;
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
 .glam-check input:checked + .glam-check-box {
-  background: linear-gradient(135deg, #d4af6a, #b8944c);
-  border-color: #d4af6a;
+  background: linear-gradient(135deg, #FF3F6C, #E6355F);
+  border-color: #FF3F6C;
 }
 
 .glam-check input:checked + .glam-check-box::after {
@@ -558,19 +552,18 @@ body {
   top: 1px;
   width: 5px;
   height: 10px;
-  border: solid #131010;
+  border: solid #FFFFFF;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 
 .glam-check a {
-  color: #d4af6a;
+  color: #FF3F6C;
   text-decoration: none;
+  font-weight: 700;
 }
 
-.glam-check a:hover {
-  text-decoration: underline;
-}
+.glam-check a:hover { text-decoration: underline; }
 
 /* ---------- Submit ---------- */
 .glam-submit {
@@ -581,22 +574,24 @@ body {
   width: 100%;
   padding: 0.9rem 1.5rem;
   margin-top: 0.5rem;
-  background: linear-gradient(135deg, #d4af6a, #b8944c);
+  background: linear-gradient(135deg, #FF3F6C, #E6355F);
   border: none;
   border-radius: 10px;
-  color: #131010;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: inherit;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px -6px rgba(255, 63, 108, 0.5);
 }
 
 .glam-submit:hover:not(:disabled) {
-  background: linear-gradient(135deg, #e0c07f, #c9a257);
+  background: linear-gradient(135deg, #E6355F, #D62B54);
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -8px rgba(212, 175, 106, 0.5);
+  box-shadow: 0 12px 28px -8px rgba(255, 63, 108, 0.6);
 }
 
 .glam-submit:active:not(:disabled) {
@@ -612,16 +607,14 @@ body {
 .glam-spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(19, 16, 16, 0.3);
-  border-top-color: #131010;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
   border-radius: 50%;
   animation: glam-spin 0.7s linear infinite;
 }
 
 @keyframes glam-spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 /* ---------- Divider ---------- */
@@ -638,20 +631,21 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(212, 175, 106, 0.15);
+  background: #E9E9EB;
 }
 
 .glam-divider span {
   position: relative;
-  background: #120f0d;
+  background: #FFFFFF;
   padding: 0 0.9rem;
-  color: #7a6e5c;
+  color: #94969F;
   font-size: 0.72rem;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
-/* ---------- Social (only Google) ---------- */
+/* ---------- Social (Google only) ---------- */
 .glam-social {
   display: grid;
   grid-template-columns: 1fr;
@@ -664,30 +658,25 @@ body {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: #0a0808;
-  border: 1px solid rgba(212, 175, 106, 0.2);
+  background: #FFFFFF;
+  border: 1.5px solid #E9E9EB;
   border-radius: 10px;
-  color: #ddd2c0;
-  font-size: 0.85rem;
-  font-weight: 400;
+  color: #282C3F;
+  font-size: 0.88rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: inherit;
 }
 
 .glam-social-btn:hover {
-  border-color: rgba(212, 175, 106, 0.5);
-  background: rgba(212, 175, 106, 0.05);
-  color: #f0e8dc;
+  border-color: #FF3F6C;
+  background: #FFF5F7;
+  color: #FF3F6C;
 }
 
-.glam-social-btn i {
-  font-size: 1rem;
-}
-
-.glam-social-btn:hover i {
-  color: #d4af6a;
-}
+.glam-social-btn i { font-size: 1rem; }
+.glam-social-btn:hover i { color: #FF3F6C; }
 
 /* ============================================================
    RESPONSIVE
@@ -695,50 +684,21 @@ body {
 @media (max-width: 900px) {
   .glam-auth-card {
     flex-direction: column;
-    border-radius: 1.5rem;
+    border-radius: 16px;
   }
-
-  .glam-side-banner {
-    padding: 2rem 1.5rem;
-    min-height: 380px;
-  }
-
-  .glam-form-panel {
-    padding: 2rem 1.5rem;
-  }
+  .glam-side-banner { padding: 2rem 1.5rem; min-height: 380px; }
+  .glam-form-panel { padding: 2rem 1.5rem; }
 }
 
 @media (max-width: 480px) {
-  .glam-auth-page {
-    padding: 0.8rem;
-  }
-
-  .glam-auth-card {
-    border-radius: 1.2rem;
-  }
-
+  .glam-auth-page { padding: 0.8rem; }
+  .glam-auth-card { border-radius: 12px; }
   .glam-side-banner,
-  .glam-form-panel {
-    padding: 1.6rem 1.2rem;
-  }
-
-  .glam-side-title {
-    font-size: 1.6rem;
-  }
-
-  .glam-form-head h3 {
-    font-size: 1.5rem;
-  }
-
-  .glam-logo-mark {
-    width: 46px;
-    height: 46px;
-  }
-
-  .glam-logo-brand {
-    font-size: 1.1rem;
-  }
-
+  .glam-form-panel { padding: 1.6rem 1.2rem; }
+  .glam-side-title { font-size: 1.6rem; }
+  .glam-form-head h3 { font-size: 1.5rem; }
+  .glam-logo-mark { width: 46px; height: 46px; }
+  .glam-logo-brand { font-size: 1.1rem; }
   .glam-row {
     flex-direction: column;
     align-items: flex-start;

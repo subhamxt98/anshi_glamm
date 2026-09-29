@@ -1,0 +1,429 @@
+/* ============================================================
+   ANSHIÉ's GLAM — PROFILE PAGE
+   Myntra Theme (White + Pink)
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+.profile-page {
+  background: #FFFFFF;
+  min-height: 100vh;
+  padding: 60px 0 80px;
+  color: #282C3F;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.italic {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  color: #FF3F6C !important;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.profile-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.profile-label {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #FF3F6C !important;
+  margin-bottom: 12px;
+}
+
+.profile-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  color: #282C3F !important;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.profile-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  color: #535766 !important;
+  margin: 0;
+}
+
+/* ============================================
+   AVATAR CARD (Left)
+   ============================================ */
+.profile-avatar-card {
+  background: #FFF5F7;
+  border: 1px solid #FFD9E1;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  position: sticky;
+  top: 100px;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF3F6C 0%, #E6355F 100%);
+  color: #FFFFFF !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(255, 63, 108, 0.30);
+  letter-spacing: -1px;
+}
+
+.profile-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #282C3F !important;
+  margin: 0 0 6px;
+  letter-spacing: -0.2px;
+}
+
+.profile-email {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #535766 !important;
+  margin: 0 0 24px;
+  word-break: break-all;
+}
+
+/* Stats */
+.profile-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 20px;
+  border-top: 1px solid #FFD9E1;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.profile-stat-num {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #FF3F6C !important;
+  line-height: 1;
+}
+
+.profile-stat-lbl {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #535766 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-stat-divider {
+  width: 1px;
+  height: 30px;
+  background: #FFD9E1;
+}
+
+/* ============================================
+   TABS CARD (Right)
+   ============================================ */
+.profile-tabs-card {
+  background: #FFFFFF;
+  border: 1px solid #E9E9EB;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Tabs */
+.profile-tabs {
+  display: flex;
+  border-bottom: 1px solid #E9E9EB;
+  background: #FAFAFA;
+}
+
+.profile-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #535766 !important;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-tab i {
+  font-size: 16px;
+}
+
+.profile-tab:hover {
+  color: #FF3F6C !important;
+  background: #FFF5F7;
+}
+
+.profile-tab.active {
+  color: #FF3F6C !important;
+  border-bottom-color: #FF3F6C;
+  background: #FFFFFF;
+}
+
+/* Form */
+.profile-form {
+  padding: 32px 28px;
+}
+
+.profile-form-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #282C3F !important;
+  margin: 0 0 6px;
+  letter-spacing: -0.2px;
+}
+
+.profile-form-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: #535766 !important;
+  margin: 0 0 24px;
+}
+
+/* Alert */
+.profile-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.profile-alert.success {
+  background: #E8F5EE;
+  border: 1px solid #A8DFC1;
+  color: #03A685 !important;
+}
+
+.profile-alert.error {
+  background: #FFF0F2;
+  border: 1px solid #FFC0CB;
+  color: #D63384 !important;
+}
+
+.profile-alert i {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* Field */
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.profile-field label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #282C3F !important;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+/* Input */
+.profile-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF !important;
+  border: 1.5px solid #E9E9EB;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.profile-input:focus-within {
+  border-color: #FF3F6C;
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.10);
+}
+
+.profile-input > i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94969F !important;
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: color 0.25s ease;
+  z-index: 2;
+}
+
+.profile-input:focus-within > i {
+  color: #FF3F6C !important;
+}
+
+.profile-input input {
+  width: 100%;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0.9rem 1rem 0.9rem 2.9rem;
+  color: #282C3F !important;
+  -webkit-text-fill-color: #282C3F !important;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  caret-color: #FF3F6C;
+}
+
+.profile-input input::placeholder {
+  color: #94969F !important;
+  -webkit-text-fill-color: #94969F !important;
+  font-weight: 400;
+  opacity: 1 !important;
+}
+
+/* Chrome Autofill Fix */
+.profile-input input:-webkit-autofill,
+.profile-input input:-webkit-autofill:hover,
+.profile-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px #FFFFFF inset !important;
+  -webkit-text-fill-color: #282C3F !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Submit Button */
+.profile-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  margin-top: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  background: #FF3F6C;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  box-shadow: 0 4px 14px rgba(255, 63, 108, 0.25);
+}
+
+.profile-submit-btn:hover:not(:disabled) {
+  background: #E6355F;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 63, 108, 0.40);
+  color: #FFFFFF !important;
+}
+
+.profile-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.profile-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.profile-submit-btn i {
+  font-size: 15px;
+}
+
+.profile-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: profile-spin 0.7s linear infinite;
+}
+
+@keyframes profile-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 991px) {
+  .profile-avatar-card {
+    position: static;
+    margin-bottom: 24px;
+  }
+
+  .profile-page {
+    padding: 40px 0 60px;
+  }
+}
+
+@media (max-width: 575px) {
+  .profile-page {
+    padding: 30px 0 50px;
+  }
+
+  .profile-form {
+    padding: 22px 18px;
+  }
+
+  .profile-tab {
+    padding: 14px 12px;
+    font-size: 12px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .profile-tab i {
+    font-size: 18px;
+  }
+
+  .profile-title {
+    font-size: 1.4rem;
+  }
+
+  .profile-avatar {
+    width: 76px;
+    height: 76px;
+    font-size: 30px;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './css/footer.css'
-import logo from '../../assets/banner.jpeg'   // ✅ same banner as logo
+import logo from '../../assets/banner.jpeg'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -28,11 +28,12 @@ const Footer = () => {
     { label: 'Terms & Conditions', icon: 'bi-file-earmark-text' },
   ]
 
+  /* ✅ Twitter color changed to pink to match theme */
   const socialLinks = [
     { icon: 'bi-instagram', label: 'Instagram', color: '#E1306C' },
-    { icon: 'bi-facebook', label: 'Facebook', color: '#1877F2' },
-    { icon: 'bi-twitter-x', label: 'Twitter', color: '#FFFFFF' },
-    { icon: 'bi-youtube', label: 'YouTube', color: '#FF0000' },
+    { icon: 'bi-facebook',  label: 'Facebook',  color: '#1877F2' },
+    { icon: 'bi-twitter-x', label: 'Twitter',   color: '#ec407a' },  // ✅ pink (theme color)
+    { icon: 'bi-youtube',   label: 'YouTube',   color: '#FF0000' },
   ]
 
   return (
@@ -64,17 +65,18 @@ const Footer = () => {
             </p>
 
             {/* ✅ Cute Social Icons */}
-            <div className="ishani-footer-socials d-flex gap-3">
+            <div className="ishani-footer-socials">
               {socialLinks.map((social) => (
-                <span
+                <a
                   key={social.label}
+                  href="#"
                   className="ishani-footer-social"
                   style={{ '--social-color': social.color }}
                   aria-label={social.label}
                   title={social.label}
                 >
                   <i className={`bi ${social.icon}`}></i>
-                </span>
+                </a>
               ))}
             </div>
           </div>
@@ -87,7 +89,7 @@ const Footer = () => {
               </span>
               Quick Links
             </h4>
-            <ul className="ishani-footer-list list-unstyled">
+            <ul className="ishani-footer-list">
               {quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path} className="ishani-footer-link">
@@ -107,7 +109,7 @@ const Footer = () => {
               </span>
               Customer Service
             </h4>
-            <ul className="ishani-footer-list list-unstyled">
+            <ul className="ishani-footer-list">
               {customerService.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path} className="ishani-footer-link">
@@ -127,13 +129,13 @@ const Footer = () => {
               </span>
               Help
             </h4>
-            <ul className="ishani-footer-list list-unstyled">
+            <ul className="ishani-footer-list">
               {helpLinks.map((link) => (
                 <li key={link.label}>
-                  <span className="ishani-footer-link ishani-footer-dummy">
+                  <a href="#" className="ishani-footer-link">
                     <i className={`bi ${link.icon}`}></i>
                     <span>{link.label}</span>
-                  </span>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -147,7 +149,7 @@ const Footer = () => {
               </span>
               Get in Touch
             </h4>
-            <ul className="ishani-footer-list list-unstyled">
+            <ul className="ishani-footer-list">
               <li>
                 <i className="bi bi-geo-alt-fill"></i>
                 <span>Mumbai, MH, India</span>

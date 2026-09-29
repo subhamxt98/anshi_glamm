@@ -1,18 +1,62 @@
 /* ============================================================
    ANSHIÉ's GLAM — Contact Page
-   Black + Blue theme (matches home page)
+   Myntra-Inspired • Clean • Premium • Modern
+   Perfect Text Visibility + Cool Design
    ============================================================ */
 
 * { box-sizing: border-box; }
 
+/* ============================================================
+   GLOBAL INPUT OVERRIDE — Kills any dark theme interference
+   ============================================================ */
+.glam-contact-page input,
+.glam-contact-page textarea {
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  color: #282C3F !important;
+  -webkit-text-fill-color: #282C3F !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.glam-contact-page input:focus,
+.glam-contact-page textarea:focus {
+  background: #FFFFFF !important;
+  color: #282C3F !important;
+  -webkit-text-fill-color: #282C3F !important;
+  outline: none !important;
+}
+
+.glam-contact-page input::placeholder,
+.glam-contact-page textarea::placeholder {
+  color: #94969F !important;
+  -webkit-text-fill-color: #94969F !important;
+  opacity: 1 !important;
+}
+
+/* Chrome Autofill Fix */
+.glam-contact-page input:-webkit-autofill,
+.glam-contact-page input:-webkit-autofill:hover,
+.glam-contact-page input:-webkit-autofill:focus,
+.glam-contact-page textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #FFFFFF inset !important;
+  -webkit-text-fill-color: #282C3F !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ============================================================
+   PAGE WRAPPER
+   ============================================================ */
 .glam-contact-page {
   position: relative;
   min-height: 100vh;
-  background: radial-gradient(circle at 15% 10%, #0a0a12 0%, #0a0a0a 55%, #050505 100%);
-  padding: 4rem 1.5rem 5rem;
+  background: #FFFFFF;
+  padding: 5rem 1.5rem 5rem;
   overflow: hidden;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  color: #f0f0f0;
+  color: #282C3F;
+  line-height: 1.6;
 }
 
 /* ---------- Soft background glows ---------- */
@@ -21,291 +65,340 @@
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  overflow: hidden;
 }
 
 .glam-contact-bg .glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(150px);
+  filter: blur(140px);
 }
 
 .glam-contact-bg .glow-1 {
-  width: 500px;
-  height: 500px;
-  top: -180px;
-  left: -160px;
-  background: #3B82F6;
-  opacity: 0.12;
+  width: 520px;
+  height: 520px;
+  top: -200px;
+  left: -180px;
+  background: #FF3F6C;
+  opacity: 0.06;
 }
 
 .glam-contact-bg .glow-2 {
-  width: 420px;
-  height: 420px;
-  bottom: -140px;
-  right: -120px;
-  background: #60A5FA;
-  opacity: 0.08;
+  width: 440px;
+  height: 440px;
+  bottom: -160px;
+  right: -140px;
+  background: #FFB6C1;
+  opacity: 0.12;
 }
 
-/* ---------- Hero ---------- */
+/* ============================================================
+   HERO
+   ============================================================ */
 .glam-contact-hero {
   position: relative;
   z-index: 2;
   text-align: center;
   max-width: 720px;
-  margin: 0 auto 3.5rem;
+  margin: 0 auto 4rem;
 }
 
 .glam-contact-badge {
   display: inline-block;
-  background: rgba(59, 130, 246, 0.12);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: #60A5FA;
+  background: #FFF5F7;
+  border: 1px solid #FFD9E1;
+  color: #FF3F6C !important;
   font-size: 0.7rem;
-  letter-spacing: 2px;
-  padding: 0.35rem 0.95rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  padding: 0.4rem 1.1rem;
   border-radius: 40px;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
   text-transform: uppercase;
 }
 
 .glam-contact-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 600;
-  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 800;
+  color: #282C3F !important;
   margin: 0 0 1rem;
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
 }
 
 .glam-contact-sub {
-  color: #9CA3AF;
-  font-size: 0.95rem;
-  font-weight: 300;
+  color: #535766 !important;
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.7;
   margin: 0;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* ---------- Main grid ---------- */
+/* ============================================================
+   MAIN GRID
+   ============================================================ */
 .glam-contact-wrap {
   position: relative;
   z-index: 2;
-  max-width: 1150px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2.5rem;
+  align-items: start;
 }
 
 /* ---------- LEFT — Info cards ---------- */
 .glam-contact-info {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
+  position: sticky;
+  top: 2rem;
 }
 
 .glam-info-card {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  padding: 1.3rem 1.2rem;
-  background: #0F0F0F;
-  border: 1px solid #1A1A1A;
-  border-radius: 14px;
-  transition: all 0.25s ease;
+  gap: 1.1rem;
+  padding: 1.5rem 1.4rem;
+  background: #FFFFFF;
+  border: 1px solid #E9E9EB;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glam-info-card:hover {
-  border-color: #3B82F6;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -12px rgba(59, 130, 246, 0.25);
+  border-color: #FF3F6C;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(255, 63, 108, 0.12);
 }
 
 .glam-info-icon {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
-  border-radius: 10px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: #60A5FA;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FFF5F7 0%, #FFE8EE 100%);
+  border: 1px solid #FFD9E1;
+  color: #FF3F6C !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.glam-info-card:hover .glam-info-icon {
+  background: #FF3F6C;
+  color: #FFFFFF !important;
+  border-color: #FF3F6C;
+  transform: scale(1.05);
 }
 
 .glam-info-text h4 {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin: 0 0 0.4rem;
-  letter-spacing: 0.3px;
+  font-weight: 700;
+  color: #282C3F !important;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.1px;
 }
 
 .glam-info-text p {
   margin: 0;
-  font-size: 0.83rem;
-  color: #9CA3AF;
-  line-height: 1.5;
-  font-weight: 300;
+  font-size: 0.86rem;
+  color: #535766 !important;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.glam-info-text p + p {
+  margin-top: 2px;
 }
 
 /* Socials */
 .glam-info-socials {
-  margin-top: auto;
-  padding: 1.2rem 1.2rem;
-  background: #0F0F0F;
-  border: 1px solid #1A1A1A;
-  border-radius: 14px;
+  margin-top: 0.5rem;
+  padding: 1.4rem 1.4rem;
+  background: #FFFFFF;
+  border: 1px solid #E9E9EB;
+  border-radius: 10px;
 }
 
 .glam-info-socials-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 800;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #6B7280;
-  margin-bottom: 0.8rem;
+  color: #94969F !important;
+  margin-bottom: 1rem;
 }
 
 .glam-info-socials-row {
   display: flex;
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 
 .glam-info-socials-row a {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 1px solid #2A2A2A;
-  color: #9CA3AF;
-  font-size: 0.95rem;
+  border: 1px solid #E9E9EB;
+  color: #535766 !important;
+  font-size: 1rem;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
+  background: #FFFFFF;
 }
 
 .glam-info-socials-row a:hover {
-  border-color: #3B82F6;
-  color: #3B82F6;
-  background: rgba(59, 130, 246, 0.08);
-  transform: translateY(-2px);
+  border-color: #FF3F6C;
+  color: #FFFFFF !important;
+  background: #FF3F6C;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 63, 108, 0.30);
 }
 
 /* ---------- RIGHT — Form card ---------- */
 .glam-contact-form-card {
-  background: #0F0F0F;
-  border: 1px solid #1A1A1A;
-  border-radius: 18px;
-  padding: 2rem 1.8rem;
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  background: #FFFFFF;
+  border: 1px solid #E9E9EB;
+  border-radius: 12px;
+  padding: 2.5rem 2.2rem;
+  box-shadow: 0 12px 40px rgba(40, 44, 63, 0.06);
 }
 
 .glam-form-head {
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #F5F5F6;
 }
 
 .glam-form-head h3 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.6rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin: 0 0 0.35rem;
+  font-weight: 800;
+  color: #282C3F !important;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.5px;
 }
 
 .glam-form-head p {
   margin: 0;
-  font-size: 0.85rem;
-  color: #9CA3AF;
-  font-weight: 300;
+  font-size: 0.88rem;
+  color: #535766 !important;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 /* Alert */
 .glam-alert {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  font-size: 0.82rem;
-  margin-bottom: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
 }
 
 .glam-alert.success {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.35);
-  color: #86efac;
+  background: #E8F5EE;
+  border: 1px solid #A8DFC1;
+  color: #03A685 !important;
 }
 
 .glam-alert.error {
-  background: rgba(220, 53, 69, 0.1);
-  border: 1px solid rgba(220, 53, 69, 0.35);
-  color: #f5a6a6;
+  background: #FFF0F2;
+  border: 1px solid #FFC0CB;
+  color: #D63384 !important;
+}
+
+.glam-alert i {
+  font-size: 1rem;
+  margin-right: 0.5rem;
 }
 
 /* Form */
 .glam-contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .glam-row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .glam-field {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .glam-field label {
   font-size: 0.72rem;
-  font-weight: 500;
-  color: #9CA3AF;
-  letter-spacing: 0.7px;
+  font-weight: 800;
+  color: #282C3F !important;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+  margin-bottom: 0;
 }
 
-/* Input */
+/* ✅ Input Wrapper */
 .glam-input {
   position: relative;
   display: flex;
   align-items: center;
-  background: #050505;
-  border: 1px solid #2A2A2A;
-  border-radius: 10px;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  border: 1.5px solid #E9E9EB;
+  border-radius: 8px;
   transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.glam-input:hover {
+  border-color: #D4D5D9;
 }
 
 .glam-input:focus-within {
-  border-color: #3B82F6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #FF3F6C;
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.10);
 }
 
 .glam-input.error {
-  border-color: rgba(220, 53, 69, 0.6);
+  border-color: #FF3F6C;
+  background: #FFF9FA !important;
 }
 
 .glam-input.error:focus-within {
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+  box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.15);
 }
 
+/* Icon */
 .glam-input > i {
   position: absolute;
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #6B7280;
-  font-size: 0.95rem;
+  color: #94969F !important;
+  font-size: 1rem;
   pointer-events: none;
-  transition: color 0.2s;
+  transition: color 0.25s ease;
+  z-index: 2;
 }
 
 .glam-input.textarea > i {
@@ -313,65 +406,95 @@
   transform: none;
 }
 
-.glam-input:focus-within > i { color: #3B82F6; }
+.glam-input:focus-within > i {
+  color: #FF3F6C !important;
+}
 
+/* ✅ INPUT + TEXTAREA */
 .glam-input input,
 .glam-input textarea {
   width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: 0.8rem 1rem 0.8rem 2.8rem;
-  color: #FFFFFF;
-  font-size: 0.9rem;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0.9rem 1rem 0.9rem 2.9rem;
+  color: #282C3F !important;
+  -webkit-text-fill-color: #282C3F !important;
+  font-size: 0.92rem;
   font-family: inherit;
   resize: vertical;
+  font-weight: 500;
+  visibility: visible !important;
+  opacity: 1 !important;
+  caret-color: #FF3F6C;
+  line-height: 1.5;
 }
 
 .glam-input textarea {
-  padding-top: 0.85rem;
-  min-height: 110px;
+  padding-top: 0.95rem;
+  min-height: 120px;
 }
 
+/* Placeholder */
 .glam-input input::placeholder,
 .glam-input textarea::placeholder {
-  color: #6B7280;
+  color: #94969F !important;
+  -webkit-text-fill-color: #94969F !important;
+  font-weight: 400;
+  opacity: 1 !important;
 }
 
+/* Error Message */
 .glam-err {
-  font-size: 0.75rem;
-  color: #f5a6a6;
-  padding-left: 0.2rem;
+  font-size: 0.76rem;
+  color: #D63384 !important;
+  padding-left: 0.15rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
 }
 
-/* Submit */
+.glam-err::before {
+  content: '⚠';
+  font-size: 0.85rem;
+}
+
+/* Submit Button */
 .glam-submit {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   width: 100%;
-  padding: 0.9rem 1.5rem;
-  margin-top: 0.4rem;
-  background: #3B82F6;
+  padding: 1rem 1.5rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #FF3F6C 0%, #E6355F 100%);
   border: none;
-  border-radius: 10px;
-  color: #FFFFFF;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  border-radius: 8px;
+  color: #FFFFFF !important;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(255, 63, 108, 0.25);
 }
 
 .glam-submit:hover:not(:disabled) {
-  background: #2563EB;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 12px 28px rgba(255, 63, 108, 0.40);
+  color: #FFFFFF !important;
 }
 
-.glam-submit:active:not(:disabled) { transform: translateY(0); }
+.glam-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
 
 .glam-submit:disabled {
   opacity: 0.7;
@@ -381,67 +504,95 @@
 .glam-spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #FFFFFF;
   border-radius: 50%;
   animation: glam-spin 0.7s linear infinite;
 }
 
-@keyframes glam-spin { to { transform: rotate(360deg); } }
+@keyframes glam-spin {
+  to { transform: rotate(360deg); }
+}
 
 /* ---------- Bottom CTA ---------- */
 .glam-contact-cta {
   position: relative;
   z-index: 2;
-  max-width: 1150px;
-  margin: 3.5rem auto 0;
+  max-width: 1200px;
+  margin: 4rem auto 0;
 }
 
 .glam-cta-inner {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04));
-  border: 1px solid rgba(59, 130, 246, 0.25);
-  border-radius: 20px;
-  padding: 2.2rem 2rem;
+  background: linear-gradient(135deg, #FFF5F7 0%, #FFFFFF 60%, #FFF5F7 100%);
+  border: 1px solid #FFD9E1;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.glam-cta-inner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 63, 108, 0.10), transparent 70%);
+  pointer-events: none;
 }
 
 .glam-cta-inner h3 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin: 0 0 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #282C3F !important;
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.4px;
+  position: relative;
+  z-index: 1;
 }
 
 .glam-cta-inner p {
-  color: #9CA3AF;
-  font-size: 0.9rem;
-  font-weight: 300;
-  margin: 0 0 1.4rem;
+  color: #535766 !important;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin: 0 0 1.6rem;
+  position: relative;
+  z-index: 1;
 }
 
 .glam-cta-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.6rem;
-  background: transparent;
-  border: 1px solid #3B82F6;
+  gap: 0.55rem;
+  padding: 0.85rem 2rem;
+  background: #FFFFFF;
+  border: 1.5px solid #FF3F6C;
   border-radius: 40px;
-  color: #60A5FA;
+  color: #FF3F6C !important;
   font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
 }
 
 .glam-cta-btn:hover {
-  background: #3B82F6;
-  color: #FFFFFF;
-  border-color: transparent;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px -10px rgba(59, 130, 246, 0.5);
+  background: #FF3F6C;
+  color: #FFFFFF !important;
+  border-color: #FF3F6C;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(255, 63, 108, 0.45);
+}
+
+.glam-cta-btn i {
+  font-size: 0.95rem;
 }
 
 /* ============================================================
@@ -450,20 +601,26 @@
 @media (max-width: 900px) {
   .glam-contact-wrap {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .glam-contact-info {
+    position: static;
     order: 2;
   }
 
   .glam-contact-form-card {
     order: 1;
   }
+
+  .glam-contact-page {
+    padding: 3.5rem 1.25rem 4rem;
+  }
 }
 
 @media (max-width: 600px) {
   .glam-contact-page {
-    padding: 2.5rem 1rem 4rem;
+    padding: 2.5rem 1rem 3.5rem;
   }
 
   .glam-row-2 {
@@ -471,18 +628,26 @@
   }
 
   .glam-contact-form-card {
-    padding: 1.6rem 1.2rem;
+    padding: 1.75rem 1.35rem;
   }
 
   .glam-info-card {
-    padding: 1.1rem 1rem;
+    padding: 1.2rem 1.1rem;
   }
 
   .glam-cta-inner {
-    padding: 1.6rem 1.2rem;
+    padding: 1.8rem 1.25rem;
   }
 
   .glam-contact-title {
-    font-size: 1.7rem;
+    font-size: 1.65rem;
+  }
+
+  .glam-contact-sub {
+    font-size: 0.9rem;
+  }
+
+  .glam-form-head h3 {
+    font-size: 1.35rem;
   }
 }

@@ -54,7 +54,7 @@ const Contact = () => {
     try {
       // TODO: Replace with your actual API call
       // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) })
-      await new Promise((r) => setTimeout(r, 1200)) // demo delay
+      await new Promise((r) => setTimeout(r, 1200))
       setSuccess(true)
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
       setTimeout(() => setSuccess(false), 5000)
@@ -154,30 +154,34 @@ const Contact = () => {
             {/* Row 1 */}
             <div className="glam-row-2">
               <div className="glam-field">
-                <label>Full Name</label>
+                <label htmlFor="contact-name">Full Name</label>
                 <div className={`glam-input ${errors.name ? 'error' : ''}`}>
                   <i className="bi bi-person"></i>
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
                     placeholder="Your name"
                     value={formData.name}
                     onChange={handleChange}
+                    autoComplete="name"
                   />
                 </div>
                 {errors.name && <span className="glam-err">{errors.name}</span>}
               </div>
 
               <div className="glam-field">
-                <label>Email Address</label>
+                <label htmlFor="contact-email">Email Address</label>
                 <div className={`glam-input ${errors.email ? 'error' : ''}`}>
                   <i className="bi bi-envelope"></i>
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     placeholder="you@example.com"
                     value={formData.email}
                     onChange={handleChange}
+                    autoComplete="email"
                   />
                 </div>
                 {errors.email && <span className="glam-err">{errors.email}</span>}
@@ -187,26 +191,29 @@ const Contact = () => {
             {/* Row 2 */}
             <div className="glam-row-2">
               <div className="glam-field">
-                <label>Phone (Optional)</label>
+                <label htmlFor="contact-phone">Phone (Optional)</label>
                 <div className={`glam-input ${errors.phone ? 'error' : ''}`}>
                   <i className="bi bi-telephone"></i>
                   <input
+                    id="contact-phone"
                     type="tel"
                     name="phone"
                     placeholder="98765 43210"
                     value={formData.phone}
                     onChange={handleChange}
                     maxLength={10}
+                    autoComplete="tel"
                   />
                 </div>
                 {errors.phone && <span className="glam-err">{errors.phone}</span>}
               </div>
 
               <div className="glam-field">
-                <label>Subject</label>
+                <label htmlFor="contact-subject">Subject</label>
                 <div className={`glam-input ${errors.subject ? 'error' : ''}`}>
                   <i className="bi bi-chat-left-text"></i>
                   <input
+                    id="contact-subject"
                     type="text"
                     name="subject"
                     placeholder="How can we help?"
@@ -220,10 +227,11 @@ const Contact = () => {
 
             {/* Message */}
             <div className="glam-field">
-              <label>Message</label>
+              <label htmlFor="contact-message">Message</label>
               <div className={`glam-input textarea ${errors.message ? 'error' : ''}`}>
                 <i className="bi bi-pencil"></i>
                 <textarea
+                  id="contact-message"
                   name="message"
                   rows={5}
                   placeholder="Write your message here..."

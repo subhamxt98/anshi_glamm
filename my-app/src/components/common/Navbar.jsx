@@ -48,6 +48,12 @@ const Navbar = () => {
     { path: '/contact', label: 'Contact' },
   ]
 
+  // ✅ Auth-only links (Profile + My Orders)
+  const authLinks = [
+    { path: '/profile', label: 'Profile', icon: 'bi-person' },
+    { path: '/my-orders', label: 'My Orders', icon: 'bi-box-seam' },
+  ]
+
   return (
     <nav className={`ishani-navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="ishani-nav-inner">
@@ -133,9 +139,10 @@ const Navbar = () => {
                   </Link>
                 </li>
 
+                {/* ✅ Updated path: /my-orders */}
                 <li>
                   <Link
-                    to="/orders"
+                    to="/my-orders"
                     className="ishani-dropdown-item"
                     onClick={closeMenu}
                   >
@@ -234,6 +241,26 @@ const Navbar = () => {
               </Link>
             )
           })}
+
+          {/* ✅ Mobile: Auth-only links (Profile + My Orders) */}
+          {isAuthenticated && (
+            <>
+              {authLinks.map((link) => {
+                const isActive = location.pathname === link.path
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`ishani-mobile-link ${isActive ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    <i className={`bi ${link.icon}`}></i>
+                    <span>{link.label}</span>
+                  </Link>
+                )
+              })}
+            </>
+          )}
 
           {/* Mobile auth */}
           {!isAuthenticated ? (

@@ -112,7 +112,6 @@ const Login = () => {
       </div>
 
       <div className="glam-auth-card">
-        {/* ===== LEFT — Brand / Banner panel ===== */}
         <aside className="glam-side">
           <div
             className="glam-side-banner"
@@ -164,7 +163,6 @@ const Login = () => {
           </div>
         </aside>
 
-        {/* ===== RIGHT — Form panel ===== */}
         <section className="glam-form-panel">
           <header className="glam-form-head">
             <h3>{isSignup ? 'Create Account' : 'Welcome Back'}</h3>
@@ -291,7 +289,9 @@ const Login = () => {
                   <span className="glam-check-box"></span>
                   <span>Remember me</span>
                 </label>
-                <button type="button" className="glam-forgot">Forgot Password?</button>
+                <Link to="/forgot-password" className="glam-forgot">
+                  Forgot Password?
+                </Link>
               </div>
             ) : (
               <div className="glam-field">
