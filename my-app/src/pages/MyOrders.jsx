@@ -54,6 +54,12 @@ const MyOrders = () => {
     processing: 'status-processing',
   }
 
+  const statusIcons = {
+    delivered: 'bi-check-circle-fill',
+    shipped: 'bi-truck',
+    processing: 'bi-clock-fill',
+  }
+
   // ===== REORDER =====
   const handleReorder = (order) => {
     order.items.forEach((item) => {
@@ -146,7 +152,7 @@ const MyOrders = () => {
 
   return (
     <div className="orders-page">
-      <div className="container">
+      <div className="orders-container">
 
         <div className="orders-header">
           <span className="orders-label">My Account</span>
@@ -180,11 +186,12 @@ const MyOrders = () => {
             {filteredOrders.map((order) => (
               <div className="order-card" key={order.id}>
                 <div className="order-card-header">
-                  <div>
+                  <div className="order-header-left">
                     <span className="order-id">Order #{order.id}</span>
                     <span className="order-date">Placed on {order.date}</span>
                   </div>
                   <span className={`order-status ${statusColors[order.status]}`}>
+                    <i className={`bi ${statusIcons[order.status]}`}></i>
                     {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                   </span>
                 </div>
