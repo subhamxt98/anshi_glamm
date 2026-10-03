@@ -10,16 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.3",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
-    "cors": "^2.8.6",
-    "crypto": "^1.0.1",
-    "dotenv": "^18.0.1",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.10.1",
-    "razorpay": "^2.9.8",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hot-toast": "^2.6.0",
@@ -35,7 +27,6 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.4",
     "globals": "^17.11.0",
-    "nodemon": "^3.1.14",
     "vite": "^8.2.2"
   }
 }

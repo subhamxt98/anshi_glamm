@@ -1,26 +1,48 @@
 // ============================================
 // ISHANI COSMETICS — DATABASE CONNECTION
 // Location: backend/config/db.js
+// Vercel serverless friendly (cached + no exit)
 // ============================================
 
 const mongoose = require('mongoose')
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      serverSelectionTimeoutMS: 10000,
-      socketTimeoutMS: 45000,
-    })
-
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`)
-    console.log(`📦 Database: ${conn.connection.name}`)
-  } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`)
-    process.exit(1)
-  }
+// Global cache — serverless ke cold starts ke beech survive karta hai
+let cached = global.mongoose
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null }
 }
 
-// Connection events
+const connectDB = async () => {
+  // Already connected → reuse
+  if (cached.conn) return cached.conn
+
+  // Connection in-progress → wait for same promise
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 10000,
+        socketTimeoutMS: 45000,
+        bufferCommands: false,
+        maxPoolSize: 10,
+      })
+      .then((m) => {
+        console.log(`✅ MongoDB Connected: ${m.connection.host}`)
+        console.log(`📦 Database: ${m.connection.name}`)
+        return m
+      })
+      .catch((err) => {
+        // Promise fail hui → cache clear karo taaki next request retry kar sake
+        cached.promise = null
+        console.error(`❌ MongoDB Connection Error: ${err.message}`)
+        throw err   // ⚠️ process.exit NAHI — throw karo, server.js middleware handle karega
+      })
+  }
+
+  cached.conn = await cached.promise
+  return cached.conn
+}
+
+// Connection events (sirf ek baar register honge)
 mongoose.connection.on('connected', () => {
   console.log('🔗 Mongoose connected to DB')
 })
