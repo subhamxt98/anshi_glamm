@@ -645,13 +645,33 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Social (Google only) ---------- */
+/* ============================================================
+   Social (Google) — CENTER ALIGNED
+   ============================================================ */
 .glam-social {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100%;
   gap: 0.8rem;
+  margin: 0 auto;
 }
 
+/* Google ka wrapper div bhi center karo */
+.glam-social > div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100%;
+}
+
+/* Google iframe (button) ko center karo */
+.glam-social iframe {
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+/* Purana custom button (agar kahin use ho raha ho) */
 .glam-social-btn {
   display: flex;
   align-items: center;

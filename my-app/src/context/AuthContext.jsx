@@ -53,7 +53,24 @@ export const AuthProvider = ({ children }) => {
     return data
   }
 
-  // ===== UPDATE USER (profile update ke baad) =====
+  // ===== GOOGLE LOGIN =====  👈 NEW
+  const googleLogin = async (credential) => {
+    const res = await fetch(`${API}/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ credential }),
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.message || 'Google login failed')
+
+    setUser(data)
+    setToken(data.token)
+    localStorage.setItem('ishani_user', JSON.stringify(data))
+    localStorage.setItem('ishani_token', data.token)
+    return data
+  }
+
+  // ===== UPDATE USER =====
   const updateUser = (newData) => {
     const updated = { ...user, ...newData }
     setUser(updated)
@@ -81,6 +98,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         register,
+        googleLogin,      // 👈 expose kiya
         logout,
         updateUser,
         isAuthenticated: !!user,

@@ -1,6 +1,8 @@
+// src/pages/Login.jsx
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { GoogleLogin } from '@react-oauth/google'   // 👈 add
 import './css/login.css'
 import banner from '../assets/banner.jpeg'
 
@@ -9,10 +11,11 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)   // 👈 add
   const [errors, setErrors] = useState({})
 
   const navigate = useNavigate()
-  const { login, register } = useAuth()
+  const { login, register, googleLogin } = useAuth()   // 👈 googleLogin add
 
   const [formData, setFormData] = useState({
     name: '',
@@ -89,6 +92,26 @@ const Login = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  // 👇 GOOGLE HANDLERS
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      setGoogleLoading(true)
+      setErrors({})
+      await googleLogin(credentialResponse.credential)
+      navigate('/')
+    } catch (err) {
+      console.error('Google login error:', err)
+      setErrors({ general: err?.message || 'Google login failed' })
+    } finally {
+      setGoogleLoading(false)
+    }
+  }
+
+  const handleGoogleError = () => {
+    console.error('Google popup error')
+    setErrors({ general: 'Google sign-in failed. Please try again.' })
   }
 
   const toggleMode = () => {
@@ -326,12 +349,37 @@ const Login = () => {
               )}
             </button>
 
-            <div className="glam-divider"><span>or continue with</span></div>
+            <div className="glam-divider">
+              <span>or continue with</span>
+            </div>
 
-            <div className="glam-social">
-              <button type="button" className="glam-social-btn">
-                <i className="bi bi-google"></i> Google
-              </button>
+            {/* 👇 GOOGLE LOGIN */}
+            <div className="glam-social" style={{ width: '100%' }}>
+              {googleLoading ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '12px',
+                    color: '#666',
+                    fontSize: 14,
+                  }}
+                >
+                  <span className="glam-spinner" style={{ marginRight: 8 }}></span>
+                  Signing in with Google...
+                </div>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  theme="outline"
+                  size="large"
+                  text="continue_with"
+                  shape="rectangular"
+                  width="320"
+                />
+              )}
             </div>
           </form>
         </section>
