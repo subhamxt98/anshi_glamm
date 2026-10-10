@@ -19,37 +19,51 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: false, // 👈 Google users ke liye optional
       minlength: [6, 'Password must be at least 6 characters'],
       select: false,
     },
+
+    // ===== GOOGLE OAUTH =====
+    googleId: { type: String, default: null },
+    avatar: { type: String, default: null },
+
     isAdmin: {
       type: Boolean,
       default: false,
     },
 
-    // ===== FORGOT PASSWORD FIELDS =====
+    // ===== FORGOT PASSWORD — OTP =====
+    resetPasswordOtp: {
+      type: String,
+      default: null,
+    },
+    resetPasswordOtpExpire: {
+      type: Date,
+      default: null,
+    },
+
+    // purane fields (agar kahin aur use ho rahe ho to rehne do)
     resetPasswordToken: {
       type: String,
-      select: false,
     },
     resetPasswordExpire: {
       type: Date,
-      select: false,
     },
   },
   { timestamps: true }
 )
 
-// Password hash
+// Password hash — sirf tab jab password ho
 userSchema.pre('save', async function () {
-  if (!this.isModified('password')) return
+  if (!this.isModified('password') || !this.password) return // 👈 Google user safety
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })
 
-// Password match
+// Password match — Google users ke paas password nahi hota
 userSchema.methods.matchPassword = async function (enteredPassword) {
+  if (!this.password) return false // 👈 Google user
   return await bcrypt.compare(enteredPassword, this.password)
 }
 
