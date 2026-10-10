@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { GoogleLogin } from '@react-oauth/google'   // 👈 add
+import { GoogleLogin } from '@react-oauth/google'
 import './css/login.css'
 import banner from '../assets/banner.jpeg'
 
@@ -11,11 +11,11 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [googleLoading, setGoogleLoading] = useState(false)   // 👈 add
+  const [googleLoading, setGoogleLoading] = useState(false)
   const [errors, setErrors] = useState({})
 
   const navigate = useNavigate()
-  const { login, register, googleLogin } = useAuth()   // 👈 googleLogin add
+  const { login, register, googleLogin } = useAuth()
 
   const [formData, setFormData] = useState({
     name: '',
@@ -94,7 +94,7 @@ const Login = () => {
     }
   }
 
-  // 👇 GOOGLE HANDLERS
+  // ===== GOOGLE HANDLERS =====
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       setGoogleLoading(true)
@@ -353,8 +353,16 @@ const Login = () => {
               <span>or continue with</span>
             </div>
 
-            {/* 👇 GOOGLE LOGIN */}
-            <div className="glam-social" style={{ width: '100%' }}>
+            {/* 👇 GOOGLE LOGIN — REDIRECT MODE */}
+            <div
+              className="glam-social"
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               {googleLoading ? (
                 <div
                   style={{
@@ -378,6 +386,8 @@ const Login = () => {
                   text="continue_with"
                   shape="rectangular"
                   width="320"
+                  ux_mode="redirect"
+                  redirect_uri="https://anshi-glamm.vercel.app/login"
                 />
               )}
             </div>
