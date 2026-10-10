@@ -94,7 +94,7 @@ const Login = () => {
     }
   }
 
-  // ===== GOOGLE HANDLERS =====
+  // ===== GOOGLE HANDLER =====
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       setGoogleLoading(true)
@@ -111,7 +111,9 @@ const Login = () => {
 
   const handleGoogleError = () => {
     console.error('Google popup error')
-    setErrors({ general: 'Google sign-in failed. Please try again.' })
+    setErrors({
+      general: 'Google sign-in failed. Please allow popups for this site.',
+    })
   }
 
   const toggleMode = () => {
@@ -353,7 +355,7 @@ const Login = () => {
               <span>or continue with</span>
             </div>
 
-            {/* 👇 GOOGLE LOGIN — REDIRECT MODE */}
+            {/* 👇 GOOGLE LOGIN — POPUP MODE (navigate works) */}
             <div
               className="glam-social"
               style={{
@@ -386,8 +388,6 @@ const Login = () => {
                   text="continue_with"
                   shape="rectangular"
                   width="320"
-                  ux_mode="redirect"
-                  redirect_uri="https://anshi-glamm.vercel.app/login"
                 />
               )}
             </div>
