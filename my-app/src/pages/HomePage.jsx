@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { cld } from '../utils/cloudinary'
 import './css/home.css'
 
 const HomePage = () => {
@@ -8,22 +9,22 @@ const HomePage = () => {
 
   // ===== CATEGORIES =====
   const categories = [
-    { id: 1, name: 'Lips', count: 24, image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&h=600&fit=crop&q=85' },
-    { id: 2, name: 'Eyes', count: 18, image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&h=600&fit=crop&q=85' },
-    { id: 3, name: 'Face', count: 32, image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&h=600&fit=crop&q=85' },
-    { id: 4, name: 'Skincare', count: 28, image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&h=600&fit=crop&q=85' },
+    { id: 1, name: 'Lips', count: 24, image: cld('anshie-glam/categories/lips', { w: 500, h: 600 }) },
+    { id: 2, name: 'Eyes', count: 18, image: cld('anshie-glam/categories/eyes', { w: 500, h: 600 }) },
+    { id: 3, name: 'Face', count: 32, image: cld('anshie-glam/categories/face', { w: 500, h: 600 }) },
+    { id: 4, name: 'Skincare', count: 28, image: cld('anshie-glam/categories/skincare', { w: 500, h: 600 }) },
   ]
 
   // ===== PRODUCTS =====
   const products = [
-    { id: 1, name: 'Velvet Matte Lipstick', category: 'Lips', price: 1299, oldPrice: 1599, rating: 4.8, reviews: 234, image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=600&h=600&fit=crop&q=85', badge: 'Best Seller' },
-    { id: 2, name: 'Rose Glow Serum', category: 'Skincare', price: 2499, oldPrice: 2999, rating: 4.9, reviews: 189, image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=600&fit=crop&q=85', badge: 'New' },
-    { id: 3, name: 'Luxury Eyeshadow Palette', category: 'Eyes', price: 1899, oldPrice: 2299, rating: 4.7, reviews: 156, image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&h=600&fit=crop&q=85', badge: 'Trending' },
-    { id: 4, name: 'Hydrating Face Cream', category: 'Skincare', price: 1699, oldPrice: 1999, rating: 4.8, reviews: 312, image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=600&fit=crop&q=85', badge: '' },
-    { id: 5, name: 'Silk Foundation', category: 'Face', price: 2199, oldPrice: 2599, rating: 4.6, reviews: 98, image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=600&fit=crop&q=85', badge: 'Best Seller' },
-    { id: 6, name: 'Volumizing Mascara', category: 'Eyes', price: 999, oldPrice: 1299, rating: 4.9, reviews: 421, image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=600&fit=crop&q=85', badge: 'New' },
-    { id: 7, name: 'Glow Highlighter', category: 'Face', price: 1499, oldPrice: 1799, rating: 4.7, reviews: 178, image: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=600&h=600&fit=crop&q=85', badge: '' },
-    { id: 8, name: 'Nourishing Hair Oil', category: 'Hair', price: 899, oldPrice: 1199, rating: 4.8, reviews: 267, image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&h=600&fit=crop&q=85', badge: 'Trending' },
+    { id: 1, name: 'Velvet Matte Lipstick', category: 'Lips', price: 1299, oldPrice: 1599, rating: 4.8, reviews: 234, image: cld('anshie-glam/products/velvet-matte-lipstick'), badge: 'Best Seller' },
+    { id: 2, name: 'Rose Glow Serum', category: 'Skincare', price: 2499, oldPrice: 2999, rating: 4.9, reviews: 189, image: cld('anshie-glam/products/rose-glow-serum'), badge: 'New' },
+    { id: 3, name: 'Luxury Eyeshadow Palette', category: 'Eyes', price: 1899, oldPrice: 2299, rating: 4.7, reviews: 156, image: cld('anshie-glam/products/luxury-eyeshadow-palette'), badge: 'Trending' },
+    { id: 4, name: 'Hydrating Face Cream', category: 'Skincare', price: 1699, oldPrice: 1999, rating: 4.8, reviews: 312, image: cld('anshie-glam/products/hydrating-face-cream'), badge: '' },
+    { id: 5, name: 'Silk Foundation', category: 'Face', price: 2199, oldPrice: 2599, rating: 4.6, reviews: 98, image: cld('anshie-glam/products/silk-foundation'), badge: 'Best Seller' },
+    { id: 6, name: 'Volumizing Mascara', category: 'Eyes', price: 999, oldPrice: 1299, rating: 4.9, reviews: 421, image: cld('anshie-glam/products/volumizing-mascara'), badge: 'New' },
+    { id: 7, name: 'Glow Highlighter', category: 'Face', price: 1499, oldPrice: 1799, rating: 4.7, reviews: 178, image: cld('anshie-glam/products/glow-highlighter'), badge: '' },
+    { id: 8, name: 'Nourishing Hair Oil', category: 'Hair', price: 899, oldPrice: 1199, rating: 4.8, reviews: 267, image: cld('anshie-glam/products/nourishing-hair-oil'), badge: 'Trending' },
   ]
 
   // ===== TESTIMONIALS =====
@@ -34,7 +35,7 @@ const HomePage = () => {
       location: 'Mumbai',
       rating: 5,
       text: "ANSHIÉ's GLAM has completely transformed my beauty routine. The quality is unmatched and the products feel so luxurious!",
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&q=85',
+      image: cld('anshie-glam/testimonials/priya', { w: 120, h: 120 }),
     },
     {
       id: 2,
@@ -42,7 +43,7 @@ const HomePage = () => {
       location: 'Delhi',
       rating: 5,
       text: 'The Rose Glow Serum is a game-changer. My skin has never looked better. Highly recommend to everyone!',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&q=85',
+      image: cld('anshie-glam/testimonials/ananya', { w: 120, h: 120 }),
     },
     {
       id: 3,
@@ -50,18 +51,18 @@ const HomePage = () => {
       location: 'Bangalore',
       rating: 5,
       text: "Beautiful packaging, fast delivery, and amazing products. ANSHIÉ's GLAM is now my go-to beauty brand.",
-      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&q=85',
+      image: cld('anshie-glam/testimonials/kavya', { w: 120, h: 120 }),
     },
   ]
 
   // ===== INSTAGRAM =====
   const instagramImages = [
-    'https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=400&h=400&fit=crop&q=85',
-    'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=400&fit=crop&q=85',
-    'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop&q=85',
-    'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&q=85',
-    'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&h=400&fit=crop&q=85',
-    'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&q=85',
+    cld('anshie-glam/instagram/1', { w: 400, h: 400 }),
+    cld('anshie-glam/instagram/2', { w: 400, h: 400 }),
+    cld('anshie-glam/instagram/3', { w: 400, h: 400 }),
+    cld('anshie-glam/instagram/4', { w: 400, h: 400 }),
+    cld('anshie-glam/instagram/5', { w: 400, h: 400 }),
+    cld('anshie-glam/instagram/6', { w: 400, h: 400 }),
   ]
 
   const handleSubscribe = (e) => {
@@ -249,7 +250,7 @@ const HomePage = () => {
               <div className="brand-story-images">
                 <div className="brand-image-1">
                   <img
-                    src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=700&fit=crop&q=85"
+                    src={cld('anshie-glam/brand/story-main', { w: 600, h: 700 })}
                     alt="Brand Story"
                     loading="lazy"
                     className="w-100 h-100 object-fit-cover"
@@ -257,7 +258,7 @@ const HomePage = () => {
                 </div>
                 <div className="brand-image-2">
                   <img
-                    src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=500&fit=crop&q=85"
+                    src={cld('anshie-glam/brand/story-secondary', { w: 400, h: 500 })}
                     alt="Brand Story 2"
                     loading="lazy"
                     className="w-100 h-100 object-fit-cover"

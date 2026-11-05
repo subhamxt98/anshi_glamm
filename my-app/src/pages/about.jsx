@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { cld } from '../utils/cloudinary' // 👈 Cloudinary import kiya
 import './css/about.css'
 
 const About = () => {
@@ -43,50 +44,50 @@ const About = () => {
     { year: '2024', title: '50K+ Customers', desc: 'Crossed 50,000 happy customers nationwide.' },
   ]
 
-  // ===== LEADERSHIP =====
+  // ===== LEADERSHIP (Cloudinary Images) =====
   const leadership = [
     {
       name: 'Aarav Sharma',
       role: 'Founder & CEO',
       quote: 'Beauty is confidence, and confidence begins with self-love.',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=700&fit=crop&q=85',
+      image: cld('anshie-glam/leadership/aarav', { w: 600, h: 700 }),
     },
     {
       name: 'Ananya Kapoor',
       role: 'Co-Founder & Creative Director',
       quote: 'Every product we make tells a story of elegance and empowerment.',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=700&fit=crop&q=85',
+      image: cld('anshie-glam/leadership/ananya', { w: 600, h: 700 }),
     },
     {
       name: 'Rohan Mehta',
       role: 'Chief Operating Officer',
       quote: 'Precision and passion — the two pillars of everything we build.',
-      image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=700&fit=crop&q=85',
+      image: cld('anshie-glam/leadership/rohan', { w: 600, h: 700 }),
     },
     {
       name: 'Sneha Patel',
       role: 'Head of Product Innovation',
       quote: 'Innovation is not about following trends — it\'s about creating them.',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=700&fit=crop&q=85',
+      image: cld('anshie-glam/leadership/sneha', { w: 600, h: 700 }),
     },
   ]
 
-  // ===== TEAM =====
+  // ===== TEAM (Cloudinary Images) =====
   const team = [
     {
       name: 'Riya Sharma',
       role: 'Marketing Lead',
-      image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=600&fit=crop&q=85',
+      image: cld('anshie-glam/team/riya', { w: 500, h: 600 }),
     },
     {
       name: 'Karan Singh',
       role: 'Lead Formulator',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=600&fit=crop&q=85',
+      image: cld('anshie-glam/team/karan', { w: 500, h: 600 }),
     },
     {
       name: 'Priya Verma',
       role: 'Customer Experience',
-      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&h=600&fit=crop&q=85',
+      image: cld('anshie-glam/team/priya', { w: 500, h: 600 }),
     },
   ]
 
@@ -133,14 +134,16 @@ const About = () => {
               <div className="about-hero-images">
                 <div className="about-img-1">
                   <img
-                    src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=700&fit=crop&q=85"
+                    // 👈 Yahan Cloudinary ka link lagaya hai
+                    src={cld('anshie-glam/brand/story-main', { w: 600, h: 700 })}
                     alt="About ANSHIÉ"
                     loading="lazy"
                   />
                 </div>
                 <div className="about-img-2">
                   <img
-                    src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=500&fit=crop&q=85"
+                    // 👈 Yahan Cloudinary ka link lagaya hai
+                    src={cld('anshie-glam/brand/story-secondary', { w: 400, h: 500 })}
                     alt="About ANSHIÉ 2"
                     loading="lazy"
                   />
@@ -180,7 +183,8 @@ const About = () => {
             <div className="col-lg-6">
               <div className="about-mission-image">
                 <img
-                  src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=700&h=600&fit=crop&q=85"
+                  // 👈 Mission image Cloudinary se
+                  src={cld('anshie-glam/about/mission', { w: 700, h: 600 })}
                   alt="Our Mission"
                   loading="lazy"
                 />

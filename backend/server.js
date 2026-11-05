@@ -32,6 +32,9 @@ app.get('/', (req, res) => {
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/payment', require('./routes/payment'))
 
+// 👇 YEH NAYI LINE ADD KI HAI
+app.use('/api/upload', require('./routes/upload')) 
+
 // 404
 app.use((req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` })
