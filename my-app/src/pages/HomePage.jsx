@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react' // 👈 useEffect add kiya
 import { Link } from 'react-router-dom'
+import axios from 'axios' // 👈 axios import kiya
 import { cld } from '../utils/cloudinary'
 import './css/home.css'
 
@@ -7,27 +8,67 @@ const HomePage = () => {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
 
-  // ===== CATEGORIES =====
-  const categories = [
-    { id: 1, name: 'Lips', count: 24, image: cld('anshie-glam/categories/lips', { w: 500, h: 600 }) },
-    { id: 2, name: 'Eyes', count: 18, image: cld('anshie-glam/categories/eyes', { w: 500, h: 600 }) },
-    { id: 3, name: 'Face', count: 32, image: cld('anshie-glam/categories/face', { w: 500, h: 600 }) },
-    { id: 4, name: 'Skincare', count: 28, image: cld('anshie-glam/categories/skincare', { w: 500, h: 600 }) },
-  ]
+  // ===== DATABASE STATES =====
+  const [dbProducts, setDbProducts] = useState([])
+  const [dbCategories, setDbCategories] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  // ===== PRODUCTS =====
-  const products = [
-    { id: 1, name: 'Velvet Matte Lipstick', category: 'Lips', price: 1299, oldPrice: 1599, rating: 4.8, reviews: 234, image: cld('anshie-glam/products/velvet-matte-lipstick'), badge: 'Best Seller' },
-    { id: 2, name: 'Rose Glow Serum', category: 'Skincare', price: 2499, oldPrice: 2999, rating: 4.9, reviews: 189, image: cld('anshie-glam/products/rose-glow-serum'), badge: 'New' },
-    { id: 3, name: 'Luxury Eyeshadow Palette', category: 'Eyes', price: 1899, oldPrice: 2299, rating: 4.7, reviews: 156, image: cld('anshie-glam/products/luxury-eyeshadow-palette'), badge: 'Trending' },
-    { id: 4, name: 'Hydrating Face Cream', category: 'Skincare', price: 1699, oldPrice: 1999, rating: 4.8, reviews: 312, image: cld('anshie-glam/products/hydrating-face-cream'), badge: '' },
-    { id: 5, name: 'Silk Foundation', category: 'Face', price: 2199, oldPrice: 2599, rating: 4.6, reviews: 98, image: cld('anshie-glam/products/silk-foundation'), badge: 'Best Seller' },
-    { id: 6, name: 'Volumizing Mascara', category: 'Eyes', price: 999, oldPrice: 1299, rating: 4.9, reviews: 421, image: cld('anshie-glam/products/volumizing-mascara'), badge: 'New' },
-    { id: 7, name: 'Glow Highlighter', category: 'Face', price: 1499, oldPrice: 1799, rating: 4.7, reviews: 178, image: cld('anshie-glam/products/glow-highlighter'), badge: '' },
-    { id: 8, name: 'Nourishing Hair Oil', category: 'Hair', price: 899, oldPrice: 1199, rating: 4.8, reviews: 267, image: cld('anshie-glam/products/nourishing-hair-oil'), badge: 'Trending' },
-  ]
+  // ===== FETCH PRODUCTS & CATEGORIES =====
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        const backendURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+        
+        // Dono API calls ek saath (Parallel) bhej rahe hain
+        const [productsRes, categoriesRes] = await Promise.all([
+          axios.get(`${backendURL}/items`),
+          axios.get(`${backendURL}/categories`)
+        ])
 
-  // ===== TESTIMONIALS =====
+        // Products ko format karna
+        const formattedProducts = productsRes.data.map((item) => ({
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          price: item.price,
+          oldPrice: item.oldPrice || item.price,
+          rating: item.rating || 4.5,
+          reviews: item.reviews || 0,
+          image: item.image,
+          badge: item.badge || '',
+        }))
+        setDbProducts(formattedProducts)
+
+        // Categories ko format karna (Agar database mein categories hain)
+        if (categoriesRes.data.length > 0) {
+          const formattedCats = categoriesRes.data.map((cat) => ({
+            id: cat._id,
+            name: cat.name,
+            count: cat.count || 0, // Agar count DB mein nahi hai toh 0 dikhega
+            image: cat.image
+          }))
+          setDbCategories(formattedCats)
+        } else {
+          // Fallback: Agar DB mein categories nahi hain toh purani hardcoded use karo
+          setDbCategories([
+            { id: 1, name: 'Lips', count: 24, image: cld('anshie-glam/categories/lips', { w: 500, h: 600 }) },
+            { id: 2, name: 'Eyes', count: 18, image: cld('anshie-glam/categories/eyes', { w: 500, h: 600 }) },
+            { id: 3, name: 'Face', count: 32, image: cld('anshie-glam/categories/face', { w: 500, h: 600 }) },
+            { id: 4, name: 'Skincare', count: 28, image: cld('anshie-glam/categories/skincare', { w: 500, h: 600 }) },
+          ])
+        }
+
+        setLoading(false)
+      } catch (error) {
+        console.error("Error fetching home data:", error)
+        setLoading(false)
+      }
+    }
+
+    fetchHomeData()
+  }, [])
+
+  // ===== TESTIMONIALS (Static rahenge) =====
   const testimonials = [
     {
       id: 1,
@@ -55,7 +96,7 @@ const HomePage = () => {
     },
   ]
 
-  // ===== INSTAGRAM =====
+  // ===== INSTAGRAM (Static rahenge) =====
   const instagramImages = [
     cld('anshie-glam/instagram/1', { w: 400, h: 400 }),
     cld('anshie-glam/instagram/2', { w: 400, h: 400 }),
@@ -72,6 +113,15 @@ const HomePage = () => {
       setEmail('')
       setTimeout(() => setSubscribed(false), 3000)
     }
+  }
+
+  // Loading State
+  if (loading) {
+    return (
+      <div className="home-page d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <h3>Loading ANSHIÉ's GLAM...</h3>
+      </div>
+    )
   }
 
   return (
@@ -160,7 +210,7 @@ const HomePage = () => {
           </div>
 
           <div className="row g-3 g-md-4">
-            {categories.map((cat) => (
+            {dbCategories.map((cat) => (
               <div className="col-6 col-lg-3" key={cat.id}>
                 <Link to={`/shop?category=${cat.name.toLowerCase()}`} className="category-card d-block">
                   <div className="category-image">
@@ -202,7 +252,7 @@ const HomePage = () => {
           </div>
 
           <div className="row g-3 g-md-4">
-            {products.slice(0, 4).map((product) => (
+            {dbProducts.slice(0, 4).map((product) => (
               <div className="col-6 col-lg-3" key={product.id}>
                 <Link to={`/product/${product.id}`} className="product-card d-block">
                   <div className="product-image-wrap">
@@ -325,7 +375,7 @@ const HomePage = () => {
           </div>
 
           <div className="row g-3 g-md-4">
-            {products.slice(4, 8).map((product) => (
+            {dbProducts.slice(4, 8).map((product) => (
               <div className="col-6 col-lg-3" key={product.id}>
                 <Link to={`/product/${product.id}`} className="product-card d-block">
                   <div className="product-image-wrap">

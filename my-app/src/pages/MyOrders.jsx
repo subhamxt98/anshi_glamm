@@ -1,43 +1,63 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios' 
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext' // 👈 Auth token ke liye
 import './css/myorders.css'
 
 const MyOrders = () => {
   const [filter, setFilter] = useState('all')
+  const [orders, setOrders] = useState([]) // 👈 Hardcoded orders ki jagah state
+  const [loading, setLoading] = useState(true)
+  
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { user } = useAuth() // User ka token nikalne ke liye
 
-  const orders = [
-    {
-      id: 'ORD-2025-001',
-      date: '15 Jan 2025',
-      status: 'delivered',
-      total: 2599,
-      items: [
-        { id: 'p1', name: 'Velvet Matte Lipstick', qty: 1, price: 1299, image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=200&h=200&fit=crop&q=85' },
-        { id: 'p2', name: 'Rose Glow Serum', qty: 1, price: 1300, image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=200&h=200&fit=crop&q=85' },
-      ],
-    },
-    {
-      id: 'ORD-2025-002',
-      date: '08 Jan 2025',
-      status: 'shipped',
-      total: 1899,
-      items: [
-        { id: 'p3', name: 'Luxury Eyeshadow Palette', qty: 1, price: 1899, image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=200&h=200&fit=crop&q=85' },
-      ],
-    },
-    {
-      id: 'ORD-2025-003',
-      date: '02 Jan 2025',
-      status: 'processing',
-      total: 3498,
-      items: [
-        { id: 'p4', name: 'Hydrating Face Cream', qty: 2, price: 1699, image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=200&h=200&fit=crop&q=85' },
-      ],
-    },
-  ]
+  // ===== FETCH ORDERS FROM BACKEND =====
+  useEffect(() => {
+    const fetchMyOrders = async () => {
+      try {
+        const backendURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+        
+        const { data } = await axios.get(`${backendURL}/orders/myorders`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+
+        // Backend data ko frontend format mein map kiya
+        const formattedOrders = data.map((order) => ({
+          id: order._id, // Database ID (MongoDB _id)
+          // Agar aapke model mein custom orderId field hai toh order.orderId use karein
+          date: new Date(order.createdAt).toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          }),
+          status: order.isDelivered ? 'delivered' : order.isPaid ? 'shipped' : 'processing',
+          total: order.totalPrice,
+          items: order.orderItems.map((item) => ({
+            id: item.productId,
+            name: item.name,
+            qty: item.quantity,
+            price: item.price,
+            image: item.image,
+          })),
+        }))
+
+        setOrders(formattedOrders)
+        setLoading(false)
+      } catch (err) {
+        console.error("Error fetching orders:", err)
+        setLoading(false)
+      }
+    }
+
+    if (user) {
+      fetchMyOrders()
+    }
+  }, [user])
 
   const filters = [
     { key: 'all', label: 'All Orders' },
@@ -150,6 +170,15 @@ const MyOrders = () => {
     URL.revokeObjectURL(url)
   }
 
+  // Loading State
+  if (loading) {
+    return (
+      <div className="orders-page d-flex justify-content-center align-items-center" style={{ minHeight: '60vh' }}>
+        <h3>Loading your orders...</h3>
+      </div>
+    )
+  }
+
   return (
     <div className="orders-page">
       <div className="orders-container">
@@ -187,7 +216,8 @@ const MyOrders = () => {
               <div className="order-card" key={order.id}>
                 <div className="order-card-header">
                   <div className="order-header-left">
-                    <span className="order-id">Order #{order.id}</span>
+                    <span className="order-id">Order #{order.id.slice(-8).toUpperCase()}</span>
+                    {/* .slice(-8) isliye taaki lambi MongoDB ID chhoti dikhe, jaise '1A2B3C4D' */}
                     <span className="order-date">Placed on {order.date}</span>
                   </div>
                   <span className={`order-status ${statusColors[order.status]}`}>
