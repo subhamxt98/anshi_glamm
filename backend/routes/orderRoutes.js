@@ -3,7 +3,6 @@ const router = express.Router()
 const Order = require('../models/orderModel')
 const { protect } = require('../middleware/authMiddleware')
 
-// Place a new order
 router.post('/', protect, async (req, res) => {
   try {
     const { orderItems, shippingAddress, paymentMethod, totalPrice } = req.body
@@ -27,7 +26,6 @@ router.post('/', protect, async (req, res) => {
   }
 })
 
-// Get logged in user's orders
 router.get('/myorders', protect, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })

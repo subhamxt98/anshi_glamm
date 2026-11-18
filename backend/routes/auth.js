@@ -1,22 +1,19 @@
-// backend/routes/auth.js
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const { OAuth2Client } = require('google-auth-library')   // 👈 ADD
+const { OAuth2Client } = require('google-auth-library')
 const router = express.Router()
 const User = require('../models/User')
 const sendEmail = require('../utils/sendEmail')
 const { protect } = require('../middleware/authMiddleware')
 
-const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)   // 👈 ADD
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-// ===== Helper: 6-digit OTP =====
 const generateOtp = () =>
   Math.floor(100000 + Math.random() * 900000).toString()
 
-// ===== Helper: OTP email HTML =====
 const otpEmailTemplate = (name, otp) => `
   <div style="font-family:Inter,Arial,sans-serif;max-width:520px;margin:0 auto;padding:32px;background:#FFFFFF;">
     <div style="text-align:center;margin-bottom:24px;">
@@ -27,8 +24,8 @@ const otpEmailTemplate = (name, otp) => `
     <h2 style="color:#282C3F;font-size:20px;">Password Reset OTP</h2>
     <p style="color:#535766;font-size:14px;line-height:1.6;">
       Hi ${name || 'there'},<br/><br/>
-      Aapne password reset request kiya hai. Neeche diya gaya OTP use karein.
-      Ye OTP <strong>10 minutes</strong> ke liye valid hai.
+      A password reset request was made for your account. Please use the OTP below.
+      This OTP is valid for <strong>10 minutes</strong>.
     </p>
 
     <div style="text-align:center;margin:32px 0;">
@@ -40,7 +37,7 @@ const otpEmailTemplate = (name, otp) => `
     </div>
 
     <p style="color:#7E808C;font-size:12px;line-height:1.6;text-align:center;">
-      Kisi ke saath share na karein. Agar aapne request nahi ki, ignore karein.
+      Do not share this OTP with anyone. If you did not request this, please ignore this email.
     </p>
 
     <hr style="border:none;border-top:1px solid #EBEBEE;margin:24px 0;"/>
@@ -50,45 +47,50 @@ const otpEmailTemplate = (name, otp) => `
   </div>
 `
 
-// ============================================================
-// REGISTER
-// ============================================================
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: 'All fields required' })
+      return res.status(400).json({ message: 'All fields are required.' })
+    }
+
+    if (!/^[a-zA-Z\s]+$/.test(name.trim())) {
+      return res.status(400).json({ 
+        message: 'Name should contain only alphabets and spaces.' 
+      })
     }
 
     const exists = await User.findOne({ email: email.toLowerCase().trim() })
     if (exists) {
-      return res.status(400).json({ message: 'User already exists' })
+      return res.status(400).json({ message: 'User already exists.' })
     }
 
-    const user = await User.create({ name, email, password })
+    const user = await User.create({ 
+      name: name.trim(), 
+      email: email.toLowerCase().trim(), 
+      password 
+    })
 
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin, // ✅ Added
       token: generateToken(user._id),
     })
   } catch (err) {
     console.error('Register error:', err.message)
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// LOGIN
-// ============================================================
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password required' })
+      return res.status(400).json({ message: 'Email and password are required.' })
     }
 
     const user = await User.findOne({ email: email.toLowerCase().trim() }).select(
@@ -96,7 +98,7 @@ router.post('/login', async (req, res) => {
     )
 
     if (!user || !(await user.matchPassword(password))) {
-      return res.status(401).json({ message: 'Invalid email or password' })
+      return res.status(401).json({ message: 'Invalid email or password.' })
     }
 
     res.json({
@@ -104,26 +106,23 @@ router.post('/login', async (req, res) => {
       name: user.name,
       email: user.email,
       avatar: user.avatar || null,
+      isAdmin: user.isAdmin, // ✅ Added
       token: generateToken(user._id),
     })
   } catch (err) {
     console.error('Login error:', err.message)
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// GOOGLE LOGIN / SIGNUP   👈 NEW
-// ============================================================
 router.post('/google', async (req, res) => {
   try {
     const { credential } = req.body
 
     if (!credential) {
-      return res.status(400).json({ message: 'Google credential required' })
+      return res.status(400).json({ message: 'Google credential is required.' })
     }
 
-    // 1. Google ID token verify karo
     const ticket = await googleClient.verifyIdToken({
       idToken: credential,
       audience: process.env.GOOGLE_CLIENT_ID,
@@ -133,16 +132,14 @@ router.post('/google', async (req, res) => {
     const { email, name, picture, sub: googleId } = payload
 
     if (!email) {
-      return res.status(400).json({ message: 'Google email not found' })
+      return res.status(400).json({ message: 'Google email not found.' })
     }
 
     const cleanEmail = email.toLowerCase().trim()
 
-    // 2. DB me user hai?
     let user = await User.findOne({ email: cleanEmail })
 
     if (user) {
-      // Existing user — Google info update karo
       let changed = false
       if (!user.googleId) {
         user.googleId = googleId
@@ -154,7 +151,6 @@ router.post('/google', async (req, res) => {
       }
       if (changed) await user.save({ validateBeforeSave: false })
     } else {
-      // Naya user banao
       user = await User.create({
         name: name || cleanEmail.split('@')[0],
         email: cleanEmail,
@@ -163,7 +159,6 @@ router.post('/google', async (req, res) => {
       })
     }
 
-    // 3. JWT do
     const token = generateToken(user._id)
 
     res.json({
@@ -171,21 +166,19 @@ router.post('/google', async (req, res) => {
       name: user.name,
       email: user.email,
       avatar: user.avatar,
+      isAdmin: user.isAdmin, // ✅ Added
       token,
     })
   } catch (err) {
     console.error('Google login error:', err.message)
-    res.status(401).json({ message: 'Google login failed. Try again.' })
+    res.status(401).json({ message: 'Google login failed. Please try again.' })
   }
 })
 
-// ============================================================
-// GET PROFILE
-// ============================================================
 router.get('/profile', protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user) return res.status(404).json({ message: 'User not found.' })
 
     res.json({
       _id: user._id,
@@ -197,29 +190,32 @@ router.get('/profile', protect, async (req, res) => {
     })
   } catch (err) {
     console.error('Get profile error:', err.message)
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// UPDATE PROFILE
-// ============================================================
 router.put('/profile', protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user) return res.status(404).json({ message: 'User not found.' })
 
     const { name, email } = req.body
+
+    if (name && !/^[a-zA-Z\s]+$/.test(name.trim())) {
+      return res.status(400).json({ 
+        message: 'Name should contain only alphabets and spaces.' 
+      })
+    }
 
     if (email && email !== user.email) {
       const exists = await User.findOne({ email: email.toLowerCase().trim() })
       if (exists) {
-        return res.status(400).json({ message: 'Email already in use' })
+        return res.status(400).json({ message: 'Email is already in use.' })
       }
-      user.email = email
+      user.email = email.toLowerCase().trim()
     }
 
-    if (name) user.name = name
+    if (name) user.name = name.trim()
 
     const updated = await user.save()
 
@@ -228,64 +224,55 @@ router.put('/profile', protect, async (req, res) => {
       name: updated.name,
       email: updated.email,
       avatar: updated.avatar,
+      isAdmin: updated.isAdmin, // ✅ Added
       token: generateToken(updated._id),
     })
   } catch (err) {
     console.error('Update profile error:', err.message)
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// CHANGE PASSWORD
-// ============================================================
 router.put('/change-password', protect, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body
 
     if (!currentPassword || !newPassword) {
-      return res.status(400).json({ message: 'All fields required' })
+      return res.status(400).json({ message: 'All fields are required.' })
     }
 
     if (newPassword.length < 6) {
-      return res
-        .status(400)
-        .json({ message: 'Password must be at least 6 characters' })
+      return res.status(400).json({ message: 'Password must be at least 6 characters.' })
     }
 
     const user = await User.findById(req.user._id).select('+password')
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user) return res.status(404).json({ message: 'User not found.' })
 
     if (!user.password) {
-      return res
-        .status(400)
-        .json({ message: 'Google account — password set nahi hai' })
+      return res.status(400).json({ message: 'Password not set for Google accounts.' })
     }
 
     const isMatch = await user.matchPassword(currentPassword)
     if (!isMatch) {
-      return res.status(401).json({ message: 'Current password is incorrect' })
+      return res.status(401).json({ message: 'Current password is incorrect.' })
     }
 
     user.password = newPassword
     await user.save()
 
-    res.json({ message: 'Password updated successfully' })
+    res.json({ message: 'Password updated successfully.' })
   } catch (err) {
     console.error('Change password error:', err.message)
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// STEP 1 — FORGOT PASSWORD → 6-digit OTP email
-// ============================================================
 router.post('/forgot-password', async (req, res) => {
   try {
     const { email } = req.body
 
     if (!email) {
-      return res.status(400).json({ message: 'Email is required' })
+      return res.status(400).json({ message: 'Email is required.' })
     }
 
     const cleanEmail = email.toLowerCase().trim()
@@ -306,19 +293,14 @@ router.post('/forgot-password', async (req, res) => {
 
     await user.save({ validateBeforeSave: false })
 
-    console.log('━━━ FORGOT-PASSWORD DEBUG ━━━')
-    console.log('📧 Email :', cleanEmail, '| 🧾 OTP :', otp)
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-
     try {
       await sendEmail({
         to: user.email,
         subject: "Password Reset OTP — ANSHIÉ's GLAM",
         html: otpEmailTemplate(user.name, otp),
       })
-      console.log(`✅ OTP email sent to: ${user.email}`)
     } catch (mailErr) {
-      console.error('❌ Mail error:', mailErr.message)
+      console.error('Mail error:', mailErr.message)
       user.resetPasswordOtp = undefined
       user.resetPasswordOtpExpire = undefined
       await user.save({ validateBeforeSave: false })
@@ -329,23 +311,20 @@ router.post('/forgot-password', async (req, res) => {
     }
 
     res.json({
-      message: 'OTP sent to your registered email. Check inbox & spam folder.',
+      message: 'OTP sent to your registered email. Please check your inbox and spam folder.',
     })
   } catch (err) {
     console.error('Forgot password error:', err.message)
-    res.status(500).json({ message: err.message || 'Server error' })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// STEP 2 — VERIFY OTP
-// ============================================================
 router.post('/verify-otp', async (req, res) => {
   try {
     const { email, otp } = req.body
 
     if (!email || !otp) {
-      return res.status(400).json({ message: 'Email and OTP required' })
+      return res.status(400).json({ message: 'Email and OTP are required.' })
     }
 
     const cleanEmail = email.toLowerCase().trim()
@@ -354,38 +333,33 @@ router.post('/verify-otp', async (req, res) => {
     const user = await User.findOne({ email: cleanEmail }).select(
       '+resetPasswordOtp +resetPasswordOtpExpire'
     )
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user) return res.status(404).json({ message: 'User not found.' })
 
     if (
       !user.resetPasswordOtp ||
       user.resetPasswordOtp !== cleanOtp ||
       user.resetPasswordOtpExpire < Date.now()
     ) {
-      return res.status(400).json({ message: 'Invalid or expired OTP' })
+      return res.status(400).json({ message: 'Invalid or expired OTP.' })
     }
 
-    res.json({ message: 'OTP verified successfully' })
+    res.json({ message: 'OTP verified successfully.' })
   } catch (err) {
     console.error('Verify OTP error:', err.message)
-    res.status(500).json({ message: err.message || 'Server error' })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 
-// ============================================================
-// STEP 3 — RESET PASSWORD
-// ============================================================
 router.post('/reset-password', async (req, res) => {
   try {
     const { email, otp, password } = req.body
 
     if (!email || !otp || !password) {
-      return res.status(400).json({ message: 'All fields required' })
+      return res.status(400).json({ message: 'All fields are required.' })
     }
 
     if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ message: 'Password must be at least 6 characters' })
+      return res.status(400).json({ message: 'Password must be at least 6 characters.' })
     }
 
     const cleanEmail = email.toLowerCase().trim()
@@ -394,14 +368,14 @@ router.post('/reset-password', async (req, res) => {
     const user = await User.findOne({ email: cleanEmail }).select(
       '+resetPasswordOtp +resetPasswordOtpExpire +password'
     )
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user) return res.status(404).json({ message: 'User not found.' })
 
     if (
       !user.resetPasswordOtp ||
       user.resetPasswordOtp !== cleanOtp ||
       user.resetPasswordOtpExpire < Date.now()
     ) {
-      return res.status(400).json({ message: 'Invalid or expired OTP' })
+      return res.status(400).json({ message: 'Invalid or expired OTP.' })
     }
 
     user.password = password
@@ -417,7 +391,7 @@ router.post('/reset-password', async (req, res) => {
     })
   } catch (err) {
     console.error('Reset password error:', err.message)
-    res.status(500).json({ message: err.message || 'Server error' })
+    res.status(500).json({ message: 'Server error. Please try again later.' })
   }
 })
 

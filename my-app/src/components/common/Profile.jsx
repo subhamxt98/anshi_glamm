@@ -1,4 +1,3 @@
-// src/components/common/Profile.jsx
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +25,6 @@ const Profile = () => {
     confirmPassword: "",
   });
 
-  // Sync form jab user change ho
   useEffect(() => {
     setFormData({
       name: user?.name || "",
@@ -35,14 +33,22 @@ const Profile = () => {
   }, [user]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Name field: sirf alphabets aur space allow
+    if (name === "name") {
+      if (/[^a-zA-Z\s]/.test(value)) {
+        return;
+      }
+    }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   const handlePasswordChange = (e) => {
     setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
   };
 
-  // ===== UPDATE PROFILE =====
   const handleSave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -67,7 +73,6 @@ const Profile = () => {
         throw new Error(data.message || "Update failed");
       }
 
-      // Context update — navbar bhi turant badal jayega
       updateUser({
         _id: data._id,
         name: data.name,
@@ -85,19 +90,22 @@ const Profile = () => {
     }
   };
 
-  // ===== CHANGE PASSWORD =====
   const handlePasswordSave = async (e) => {
     e.preventDefault();
     setAlert(null);
 
+    if (!passwordData.currentPassword) {
+      setAlert({ type: "error", message: "Please enter your current password." });
+      return;
+    }
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setAlert({ type: "error", message: "Passwords do not match!" });
+      setAlert({ type: "error", message: "New passwords do not match!" });
       return;
     }
     if (passwordData.newPassword.length < 6) {
       setAlert({
         type: "error",
-        message: "Password must be at least 6 characters",
+        message: "Password must be at least 6 characters.",
       });
       return;
     }
@@ -147,7 +155,6 @@ const Profile = () => {
     <div className="profile-page">
       <div className="container">
 
-        {/* HEADER */}
         <div className="profile-header">
           <span className="profile-label">My Account</span>
           <h1 className="profile-title">
@@ -161,7 +168,6 @@ const Profile = () => {
 
         <div className="row g-4">
 
-          {/* LEFT: AVATAR CARD */}
           <div className="col-lg-4">
             <div className="profile-avatar-card">
               <div className="profile-avatar">{userInitial}</div>
@@ -189,7 +195,6 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* RIGHT: TABS */}
           <div className="col-lg-8">
             <div className="profile-tabs-card">
 
@@ -227,7 +232,6 @@ const Profile = () => {
                 </button>
               </div>
 
-              {/* ===== PROFILE TAB ===== */}
               {activeTab === "profile" && (
                 <form className="profile-form" onSubmit={handleSave}>
                   <h3 className="profile-form-title">Personal Information</h3>
@@ -327,9 +331,12 @@ const Profile = () => {
                 </form>
               )}
 
-              {/* ===== PASSWORD TAB ===== */}
               {activeTab === "password" && (
-                <form className="profile-form" onSubmit={handlePasswordSave}>
+                <form
+                  className="profile-form"
+                  onSubmit={handlePasswordSave}
+                  autoComplete="off"
+                >
                   <h3 className="profile-form-title">Change Password</h3>
                   <p className="profile-form-desc">
                     Keep your account secure with a strong password
@@ -358,6 +365,7 @@ const Profile = () => {
                         value={passwordData.currentPassword}
                         onChange={handlePasswordChange}
                         placeholder="Enter current password"
+                        autoComplete="new-password"
                         required
                       />
                     </div>
@@ -373,6 +381,7 @@ const Profile = () => {
                         value={passwordData.newPassword}
                         onChange={handlePasswordChange}
                         placeholder="Enter new password"
+                        autoComplete="new-password"
                         required
                       />
                     </div>
@@ -388,6 +397,7 @@ const Profile = () => {
                         value={passwordData.confirmPassword}
                         onChange={handlePasswordChange}
                         placeholder="Confirm new password"
+                        autoComplete="new-password"
                         required
                       />
                     </div>
@@ -413,7 +423,6 @@ const Profile = () => {
                 </form>
               )}
 
-              {/* ===== ACTIONS TAB ===== */}
               {activeTab === "actions" && (
                 <div className="profile-form">
                   <h3 className="profile-form-title">Quick Actions</h3>

@@ -17,7 +17,9 @@ const Footer = () => {
     { path: '/login', label: 'Login', icon: 'bi-person-heart' },
     { path: '/register', label: 'Register', icon: 'bi-person-plus' },
     { path: '/cart', label: 'My Cart', icon: 'bi-bag' },
-    { path: '/orders', label: 'My Orders', icon: 'bi-box-seam' },
+    { path: '/my-orders', label: 'My Orders', icon: 'bi-box-seam' },
+    // ✅ Admin Login Link Add kiya
+    { path: '/admin-login', label: 'Admin Login', icon: 'bi-shield-lock' },
   ]
 
   const helpLinks = [
@@ -28,26 +30,18 @@ const Footer = () => {
     { label: 'Terms & Conditions', icon: 'bi-file-earmark-text' },
   ]
 
-  /* ✅ Twitter color changed to pink to match theme */
   const socialLinks = [
     { icon: 'bi-instagram', label: 'Instagram', color: '#E1306C' },
     { icon: 'bi-facebook',  label: 'Facebook',  color: '#1877F2' },
-    { icon: 'bi-twitter-x', label: 'Twitter',   color: '#ec407a' },  // ✅ pink (theme color)
+    { icon: 'bi-twitter-x', label: 'Twitter',   color: '#ec407a' },
     { icon: 'bi-youtube',   label: 'YouTube',   color: '#FF0000' },
   ]
 
   return (
     <footer className="ishani-footer">
-
-      {/* ===== CUTE TOP WAVE ===== */}
       <div className="ishani-footer-wave" />
-
       <div className="container">
-
-        {/* ===== MAIN FOOTER ROW ===== */}
         <div className="row g-5 py-5">
-
-          {/* ===== BRAND COLUMN ===== */}
           <div className="col-lg-4 col-md-6">
             <Link to="/" className="ishani-footer-logo d-flex align-items-center gap-2 text-decoration-none mb-3">
               <div className="ishani-footer-logo-img">
@@ -64,7 +58,6 @@ const Footer = () => {
               Beauty redefined with elegance, quality, and care.
             </p>
 
-            {/* ✅ Cute Social Icons */}
             <div className="ishani-footer-socials">
               {socialLinks.map((social) => (
                 <a
@@ -81,7 +74,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ===== QUICK LINKS ===== */}
           <div className="col-lg-2 col-md-6 col-6">
             <h4 className="ishani-footer-heading">
               <span className="ishani-heading-icon">
@@ -101,7 +93,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ===== CUSTOMER SERVICE ===== */}
           <div className="col-lg-2 col-md-6 col-6">
             <h4 className="ishani-footer-heading">
               <span className="ishani-heading-icon">
@@ -121,7 +112,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ===== HELP ===== */}
           <div className="col-lg-2 col-md-6 col-6">
             <h4 className="ishani-footer-heading">
               <span className="ishani-heading-icon">
@@ -141,7 +131,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ===== CONTACT ===== */}
           <div className="col-lg-2 col-md-6 col-6">
             <h4 className="ishani-footer-heading">
               <span className="ishani-heading-icon">
@@ -164,10 +153,8 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
         </div>
 
-        {/* ===== BOTTOM BAR ===== */}
         <div className="ishani-footer-bottom d-flex flex-wrap justify-content-between align-items-center py-4 gap-3">
           <p className="ishani-footer-copy mb-0">
             Made with <i className="bi bi-heart-fill ishani-heart"></i> by <span>ANSHIÉ's GLAM</span> © {currentYear}
@@ -198,7 +185,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
       </div>
     </footer>
   )

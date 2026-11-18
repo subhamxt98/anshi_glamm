@@ -1,18 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios' // 👈 Order backend mein save karne ke liye
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
-import { handlePayment } from '../utils/razorpay'
 import './css/cart.css'
 
 const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, getSubtotal, clearCart } = useCart()
-  const { user, isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
-
-  const [paying, setPaying] = useState(false)
-  const [error, setError] = useState('')
 
   // ===== TOTALS =====
   const subtotal = getSubtotal()
@@ -40,73 +35,14 @@ const CartPage = () => {
     )
   }
 
-  // ===== PAYMENT & ORDER HANDLER =====
-  const handleCheckout = async () => {
-    setError('')
-
+  // ===== CHECKOUT HANDLER =====
+  const handleCheckout = () => {
     if (!isAuthenticated) {
       navigate('/login')
       return
     }
-
-    setPaying(true)
-    
-    await handlePayment({
-      amount: total,
-      user,
-      onSuccess: async (data) => {
-        try {
-          const backendURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
-          
-          // Backend Order Model format ke hisaab se data
-          const orderData = {
-            orderItems: cartItems.map((item) => ({
-              name: item.name,
-              quantity: item.quantity,
-              image: item.image,
-              price: item.price,
-              productId: item.id, // Frontend ka ID
-            })),
-            shippingAddress: {
-              address: user.address || "Default Address", 
-              city: "Default City",
-              postalCode: "000000",
-              country: "India",
-            },
-            paymentMethod: "Razorpay",
-            totalPrice: total,
-          }
-
-          // Order Database mein Save karo
-          const { data: createdOrder } = await axios.post(
-            `${backendURL}/orders`,
-            orderData,
-            {
-              headers: { Authorization: `Bearer ${user.token}` },
-            }
-          )
-
-          clearCart()
-          
-          // Order ID ke saath Success page par bhejo
-          navigate('/order-success', {
-            state: { 
-              paymentId: data.payment_id, 
-              amount: total,
-              orderId: createdOrder._id 
-            },
-          })
-        } catch (err) {
-          console.error("Order save error:", err)
-          setError("Payment successful, but failed to save order. Please contact support.")
-        }
-      },
-      onFailure: (msg) => {
-        setError(msg || 'Payment failed. Please try again.')
-      },
-    })
-    
-    setPaying(false)
+    // ✅ Ab direct Checkout Page par bhejenge
+    navigate('/checkout')
   }
 
   return (
@@ -237,28 +173,12 @@ const CartPage = () => {
                 <span>₹{total.toLocaleString('en-IN')}</span>
               </div>
 
-              {error && (
-                <div className="cart-error">
-                  <i className="bi bi-exclamation-triangle-fill"></i>
-                  {error}
-                </div>
-              )}
-
               <button
                 className="cart-checkout-btn"
                 onClick={handleCheckout}
-                disabled={paying}
               >
-                {paying ? (
-                  <>
-                    <span className="cart-spinner"></span> Processing...
-                  </>
-                ) : (
-                  <>
-                    <i className="bi bi-lock-fill"></i>
-                    Proceed to Pay ₹{total.toLocaleString('en-IN')}
-                  </>
-                )}
+                <i className="bi bi-lock-fill"></i>
+                Proceed to Checkout
               </button>
 
               {!isAuthenticated && (

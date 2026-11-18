@@ -44,7 +44,9 @@ app.use('/api/cart', require('./routes/cartRouter'))
 app.use('/api/categories', require('./routes/categoryRoutes'))
 app.use('/api/customers', require('./routes/customerRoutes'))
 
-// 👇 contact wali line hata di gayi hai
+// 3. Admin Routes (✅ YEH MISSING THA)
+app.use('/api/admin', require('./routes/adminRoutes'))
+
 
 // ==========================================
 // 404 Handler
