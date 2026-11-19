@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 
 const AdminProducts = ({ token }) => {
   const [products, setProducts] = useState([])
+  const fileInputRef = useRef(null)
   
-  // Form States (Discount, oldPrice included)
   const [form, setForm] = useState({ 
     name: '', 
     description: '', 
@@ -16,15 +16,13 @@ const AdminProducts = ({ token }) => {
   })
   const [image, setImage] = useState(null)
   
-  // UI States
   const [loading, setLoading] = useState(false)
   const [fetchLoading, setFetchLoading] = useState(true)
   const [error, setError] = useState('')
-  const [editId, setEditId] = useState(null) // Edit mode
+  const [editId, setEditId] = useState(null) 
 
   const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
-  // 1. Products Fetch karna
   const fetchProducts = async () => {
     setFetchLoading(true)
     setError('')
@@ -35,7 +33,7 @@ const AdminProducts = ({ token }) => {
       setProducts(data)
     } catch (err) {
       console.error(err)
-      setError(err.response?.data?.message || 'Products load nahi ho paye. Check token.')
+      setError(err.response?.data?.message || 'Products load nahi ho paye.')
     } finally {
       setFetchLoading(false)
     }
@@ -45,10 +43,30 @@ const AdminProducts = ({ token }) => {
     if (token) fetchProducts() 
   }, [token])
 
-  // 2. Add ya Update Handler
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    if (!file.type.startsWith('image/')) {
+      alert('❌ GALAT FILE! Sirf PHOTO (JPG, PNG, WEBP) select karein. Video allowed nahi hai.')
+      setImage(null)
+      if (fileInputRef.current) fileInputRef.current.value = "" 
+      return
+    }
+
+    setImage(file)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (image && !image.type.startsWith('image/')) {
+      setError('❌ Aapne galat file select ki hai. Sirf photo select karein!')
+      return; 
+    }
+
     if (!image && !editId) return alert('Naye product ke liye image select karein')
+    
     setLoading(true)
     setError('')
 
@@ -58,32 +76,32 @@ const AdminProducts = ({ token }) => {
 
     try {
       if (editId) {
-        // Edit (Update)
         await axios.put(`${API}/admin/items/${editId}`, formData, { 
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } 
         })
         alert('✅ Product Updated Successfully!')
       } else {
-        // Add (New)
         await axios.post(`${API}/admin/items`, formData, { 
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } 
         })
         alert('✅ New Product Added!')
       }
       
-      // Reset Form
       setForm({ name: '', description: '', price: '', oldPrice: '', category: '', countInStock: '', rating: 4.5 })
       setImage(null)
       setEditId(null)
+      
+      if (fileInputRef.current) fileInputRef.current.value = ""
+      
       fetchProducts()
     } catch (err) {
+      console.log("EXACT ERROR:", err.response?.data || err.message) 
       setError(err.response?.data?.message || 'Error saving product')
     } finally {
       setLoading(false)
     }
   }
 
-  // 3. Edit Button
   const handleEdit = (product) => {
     setForm({ 
       name: product.name, 
@@ -102,9 +120,9 @@ const AdminProducts = ({ token }) => {
     setEditId(null)
     setForm({ name: '', description: '', price: '', oldPrice: '', category: '', countInStock: '', rating: 4.5 })
     setImage(null)
+    if (fileInputRef.current) fileInputRef.current.value = ""
   }
 
-  // 4. Delete
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this product?')) return
     try {
@@ -115,7 +133,6 @@ const AdminProducts = ({ token }) => {
 
   return (
     <div>
-      {/* ===== SECTION 1: FORM ===== */}
       <h2 className="admin-page-title">{editId ? 'Edit Product Details' : 'Add New Product'}</h2>
 
       {error && <div style={{ color: 'red', marginBottom: '20px', fontWeight: 'bold' }}>{error}</div>}
@@ -139,7 +156,13 @@ const AdminProducts = ({ token }) => {
             <label style={{ fontSize: '13px', fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>
               Product Image {editId && '(Nayi image nahi daalni toh chhod dein)'}
             </label>
-            <input type="file" onChange={e => setImage(e.target.files[0])} required={!editId} />
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              accept="image/png, image/jpeg, image/jpg, image/webp" 
+              onChange={handleImageChange} 
+              required={!editId} 
+            />
           </div>
 
           <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
@@ -155,7 +178,6 @@ const AdminProducts = ({ token }) => {
         </form>
       </div>
 
-      {/* ===== SECTION 2: PRODUCTS TABLE ===== */}
       <h2 className="admin-page-title" style={{ marginTop: '40px' }}>Listed Products ({products.length})</h2>
       
       {fetchLoading ? (

@@ -24,12 +24,9 @@ const ShopPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Aapka backend URL (Check karein ki .env mein sahi hai ya nahi)
         const backendURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
         const { data } = await axios.get(`${backendURL}/items`);
         
-        console.log("Backend Data:", data); // Debugging ke liye
-
         if (data && data.length > 0) {
           const formattedData = data.map((item) => ({
             id: item._id,
@@ -59,12 +56,14 @@ const ShopPage = () => {
 
   const categories = ["All", "Lips", "Eyes", "Face", "Skincare", "Hair", "Body", "Nails"];
 
-  // Filter Logic
+  // Filter Logic (Updated for Case-Insensitive match)
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
     if (selectedCategory !== "All") {
-      result = result.filter((p) => p.category === selectedCategory);
+      result = result.filter(
+        (p) => p.category.toLowerCase() === selectedCategory.toLowerCase()
+      );
     }
 
     result = result.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
@@ -175,7 +174,8 @@ const ShopPage = () => {
                     >
                       {cat}
                       <span className="filter-cat-count">
-                        {cat === "All" ? products.length : products.filter((p) => p.category === cat).length}
+                        {/* Case-Insensitive count update */}
+                        {cat === "All" ? products.length : products.filter((p) => p.category.toLowerCase() === cat.toLowerCase()).length}
                       </span>
                     </button>
                   ))}
